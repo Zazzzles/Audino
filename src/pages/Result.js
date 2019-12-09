@@ -51,8 +51,8 @@ class Result extends Component {
 
   componentDidMount = async () => {
     const { location } = this.props;
-    const { file } = location;
-    parseFile(file, this.parseData);
+    const { files } = location;
+    parseFile(files[0], this.parseData);
   };
 
   parseData = res => {

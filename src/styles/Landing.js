@@ -35,6 +35,12 @@ export const ContinueButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+`;
+
+export const ContinueButtonPlaceholder = styled.div`
+  height: 50px;
+  width: 300px;
 `;
 
 export const ButtonText = styled.span`

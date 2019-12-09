@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 
-import { Container, Label, FileLabel } from "./styles";
+import {
+  Container,
+  Label,
+  FileLabel,
+  FileUpload,
+  FileUploadLabel
+} from "./styles";
 
 export default class Dropzone extends Component {
   constructor(props) {
@@ -23,7 +29,6 @@ export default class Dropzone extends Component {
   handleDragIn = e => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Drag in");
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
       this.setState({
         dragOver: true
@@ -34,7 +39,6 @@ export default class Dropzone extends Component {
   handleDragOut = e => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Drag out");
     this.setState({
       dragOver: false
     });
@@ -49,7 +53,6 @@ export default class Dropzone extends Component {
   handleDrop = e => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Drop");
     this.setState({
       dragOver: false
     });
@@ -76,6 +79,10 @@ export default class Dropzone extends Component {
     const { dragOver, droppedFiles } = this.state;
     return (
       <Container ref={this.dropRef} droppable={dragOver}>
+        <FileUploadLabel>
+          <FileUpload type={"file"} />
+        </FileUploadLabel>
+
         {droppedFiles.length === 0 ? (
           <Label>Drop files here</Label>
         ) : (

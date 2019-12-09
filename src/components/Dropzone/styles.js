@@ -14,6 +14,17 @@ export const Container = styled.div`
   transition: all 0.3s;
 `;
 
+export const FileUpload = styled.input`
+  display: none;
+`;
+
+export const FileUploadLabel = styled.label`
+  position: absolute;
+  height: 300px;
+  width: 500px;
+  cursor: pointer;
+`;
+
 export const Label = styled.span`
   color: white;
   font-weight: 700;
