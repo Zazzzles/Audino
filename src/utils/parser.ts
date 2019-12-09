@@ -6,8 +6,7 @@ interface DataPoint {
   amount: Number;
   ref: String;
 }
-export function parseFile(file: any, onComplete: any) {
-  console.log(file);
+export function parseFile(file: File, onComplete: Function) {
   Papa.parse(file, { complete: onComplete });
 }
 
@@ -27,7 +26,7 @@ export function parseResults(res: any): Array<DataPoint> {
   return data;
 }
 
-export function getMonths(data: Array<DataPoint>) {
+export function getMonths(data: Array<DataPoint>): Array<Number> {
   let months: Array<any> = [];
   data.forEach(item => {
     let month = parseInt(item.date.split("/")[1]);
@@ -36,7 +35,7 @@ export function getMonths(data: Array<DataPoint>) {
   return months;
 }
 
-export function sortByMonth(data: Array<any>) {
+export function sortByMonth(data: Array<any>): Array<Array<DataPoint>> {
   let sorted: any = {};
   data.forEach(item => {
     let month = parseInt(item.date.split("/")[1]);
@@ -49,10 +48,10 @@ export function sortByMonth(data: Array<any>) {
   return sorted;
 }
 
-export function isolateDate(data: Array<any>) {
+export function isolateDate(data: Array<any>): Array<String> {
   return data.map(item => item.date);
 }
 
-export function isolateAmount(data: Array<any>) {
+export function isolateAmount(data: Array<any>): Array<Number> {
   return data.map(item => item.amount);
 }
