@@ -1,13 +1,19 @@
 //const csv = require("csv-parser");
-import Papa from "papaparse";
+const Papa = require("papaparse");
 
-export function parseFile(file, onComplete) {
+interface DataPoint {
+  date: String;
+  amount: Number;
+  ref: String;
+}
+export function parseFile(file: any, onComplete: any) {
+  console.log(file);
   Papa.parse(file, { complete: onComplete });
 }
 
-export function parseResults(res) {
-  let data = [];
-  res.data.map(item => {
+export function parseResults(res: any): Array<DataPoint> {
+  let data: Array<DataPoint> = [];
+  res.data.map((item: any) => {
     if (item["0"] && item["1"] && item["3"]) {
       if (!isNaN(parseInt(item["1"]))) {
         data.push({
@@ -21,8 +27,8 @@ export function parseResults(res) {
   return data;
 }
 
-export function getMonths(data) {
-  let months = [];
+export function getMonths(data: Array<DataPoint>) {
+  let months: Array<any> = [];
   data.forEach(item => {
     let month = parseInt(item.date.split("/")[1]);
     months.includes(month) || months.push(month);
@@ -30,8 +36,8 @@ export function getMonths(data) {
   return months;
 }
 
-export function sortByMonth(data) {
-  let sorted = {};
+export function sortByMonth(data: Array<any>) {
+  let sorted: any = {};
   data.forEach(item => {
     let month = parseInt(item.date.split("/")[1]);
     if (sorted[month]) {
@@ -43,10 +49,10 @@ export function sortByMonth(data) {
   return sorted;
 }
 
-export function isolateDate(data) {
+export function isolateDate(data: Array<any>) {
   return data.map(item => item.date);
 }
 
-export function isolateAmount(data) {
+export function isolateAmount(data: Array<any>) {
   return data.map(item => item.amount);
 }

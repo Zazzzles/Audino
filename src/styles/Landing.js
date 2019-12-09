@@ -7,6 +7,6 @@ export const MainWrapper = styled.div`
 `;
 
 export const ChartContainer = styled.div`
-  height: ${props => props.height};
-  width: ${props => props.width};
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
 `;

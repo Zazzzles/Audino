@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import moment from "moment";
 import { Chart } from "chart.js";
 
 export default class Linechart extends Component {
@@ -9,11 +9,11 @@ export default class Linechart extends Component {
     var myChart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: labels,
+        labels: labels.reverse(),
         datasets: [
           {
             label: heading,
-            data: data,
+            data: data.reverse(),
             // backgroundColor: [
             //   "rgba(255, 99, 132, 0.2)",
             //   "rgba(54, 162, 235, 0.2)",
@@ -39,7 +39,19 @@ export default class Linechart extends Component {
           yAxes: [
             {
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                callback: function(value, index, values) {
+                  return "R" + value;
+                }
+              }
+            }
+          ],
+          xAxes: [
+            {
+              ticks: {
+                callback: function(value, index, values) {
+                  return moment(value).format("DD");
+                }
               }
             }
           ]

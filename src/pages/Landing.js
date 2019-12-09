@@ -42,7 +42,6 @@ class Landing extends Component {
   }
   onChangeHandler = event => {
     const file = event.target.files[0];
-    console.log(file);
     parseFile(file, this.parseData);
   };
 
@@ -50,7 +49,6 @@ class Landing extends Component {
     const data = parseResults(res);
     const months = getMonths(data);
     const sortedByMonth = sortByMonth(data);
-    console.log(sortedByMonth);
     this.setState({ data, sortedByMonth });
   };
 
