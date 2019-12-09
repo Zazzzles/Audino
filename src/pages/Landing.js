@@ -2,7 +2,14 @@ import React, { Component } from "react";
 
 import { withRouter } from "react-router-dom";
 
-import { MainWrapper, LogoImage, CenterContainer } from "../styles/Landing";
+import {
+  MainWrapper,
+  LogoImage,
+  CenterContainer,
+  Tagline,
+  ContinueButton,
+  ButtonText
+} from "../styles/Landing";
 
 import Dropzone from "../components/Dropzone";
 
@@ -28,7 +35,11 @@ class Landing extends Component {
       <MainWrapper image={BG}>
         <CenterContainer>
           <LogoImage src={Logo} />
+          <Tagline>Personal finance, visualised</Tagline>
           <Dropzone handleDrop={this.handleDrop} />
+          <ContinueButton>
+            <ButtonText>Continue</ButtonText>
+          </ContinueButton>
         </CenterContainer>
       </MainWrapper>
     );

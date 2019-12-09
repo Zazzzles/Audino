@@ -21,3 +21,24 @@ export const CenterContainer = styled.div`
 export const LogoImage = styled.img`
   height: 60px;
 `;
+
+export const Tagline = styled.span`
+  color: white;
+`;
+
+export const ContinueButton = styled.div`
+  height: 50px;
+  width: 300px;
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonText = styled.span`
+  color: #c471ed;
+  font-size: 20px;
+  font-weight: 800;
+`;
