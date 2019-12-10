@@ -25,6 +25,13 @@ class Landing extends Component {
     };
   }
 
+  componentDidMount() {
+    const { history } = this.props;
+    history.push({
+      pathname: "/dash"
+    });
+  }
+
   handleDrop = data => {
     console.log(data);
     this.setState({

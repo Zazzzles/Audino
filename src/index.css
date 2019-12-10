@@ -1,10 +1,12 @@
 body,
 html {
   margin: 0;
+  height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Open Sans", sans-serif;
 }
 
 #root {
+  height: 100vh;
 }
