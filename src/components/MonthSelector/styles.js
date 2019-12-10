@@ -20,6 +20,7 @@ export const MonthItem = styled.div`
   margin-left: 10px;
   font-size: 15px;
   cursor: pointer;
+  transition: all 0.3s;
   color: ${props => (props.selected ? "white" : "#00000061")};
   background-color: ${props => (props.selected ? "#609FEB" : "transparent")};
 `;

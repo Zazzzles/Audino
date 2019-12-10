@@ -31,7 +31,7 @@ class Dash extends Component {
         <ContentContainer>
           <TransactionList />
           <NavPanel>
-            <Navbar activeItem={"monthly"} onClick={this.onNavItemClicked} />
+            <Navbar onClick={this.onNavItemClicked} />
             <MonthlySection />
           </NavPanel>
         </ContentContainer>

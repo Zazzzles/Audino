@@ -16,6 +16,7 @@ export const IconWrapper = styled.div`
   height: 30px;
   width: 30px;
   border-radius: 15px;
+  transition: all 0.3s;
   background-color: ${props => (props.active ? "#609FEB" : "transparent")};
 `;
 

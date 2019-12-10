@@ -25,3 +25,8 @@ export const ChartContainer = styled.div`
   border: 1px solid lightgrey;
   border-radius: 15px;
 `;
+
+export const ChartWrapper = styled.div`
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
+`;

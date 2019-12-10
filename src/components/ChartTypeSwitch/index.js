@@ -19,44 +19,36 @@ const Icon = ({ white, blue, active = false, onClick }) => {
   );
 };
 export default function ChartTypeSwitch({ onSwitch }) {
-  const [activeType, setActiveType] = useState("pie");
+  const [activeType, setActiveType] = useState("line");
+  function handleClick(type) {
+    onSwitch(type);
+    setActiveType(type);
+  }
   return (
     <Container>
-      <Icon
+      {/* <Icon
         white={PieWhite}
         blue={PieBlue}
         active={activeType === "pie"}
-        onClick={() => {
-          onSwitch("pie");
-          setActiveType("pie");
-        }}
-      />
+        onClick={() => handleClick("pie")}
+      /> */}
       <Icon
         white={BarWhite}
         blue={BarBlue}
         active={activeType === "bar"}
-        onClick={() => {
-          onSwitch("bar");
-          setActiveType("bar");
-        }}
+        onClick={() => handleClick("bar")}
       />
       <Icon
         white={LineWhite}
         blue={LineBlue}
         active={activeType === "line"}
-        onClick={() => {
-          onSwitch("line");
-          setActiveType("line");
-        }}
+        onClick={() => handleClick("line")}
       />
       <Icon
         white={CurveWhite}
         blue={CurveBlue}
         active={activeType === "curve"}
-        onClick={() => {
-          onSwitch("curve");
-          setActiveType("curve");
-        }}
+        onClick={() => handleClick("curve")}
       />
     </Container>
   );
