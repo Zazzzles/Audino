@@ -11,14 +11,7 @@ import Navbar from "../components/Navbar";
 //Sections
 import MonthlySection from "../components/MonthlySection";
 //Utils
-import {
-  parseFiles,
-  parseResults,
-  getMonths,
-  isolateDate,
-  isolateAmount,
-  sortByMonth
-} from "../utils/parser";
+import { parseFiles } from "../utils/parser";
 import { getFiles } from "../utils/persistence";
 
 class Dash extends Component {
@@ -77,7 +70,7 @@ class Dash extends Component {
             <TransactionList transactions={workingFile.transactions} />
             <NavPanel>
               <Navbar onClick={this.onNavItemClicked} />
-              <MonthlySection />
+              <MonthlySection transactions={workingFile.transactions} />
             </NavPanel>
           </ContentContainer>
         )}

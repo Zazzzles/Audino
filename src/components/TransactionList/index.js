@@ -34,10 +34,12 @@ export default function TransactionList({ transactions = [] }) {
       </TopBar>
       <TransactionsLabel>{transactions.length} transactions</TransactionsLabel>
       <RowContainer>
-        {transactions.map(transaction => {
+        {transactions.map((transaction, index) => {
           const { date, ref, amount } = transaction;
 
-          return <Row date={date} reference={ref} amount={amount} />;
+          return (
+            <Row key={index} date={date} reference={ref} amount={amount} />
+          );
         })}
         {/* <Row
           date={"2010/01/04"}

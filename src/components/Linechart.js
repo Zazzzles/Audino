@@ -3,12 +3,21 @@ import moment from "moment";
 import { Chart } from "chart.js";
 
 export default class Linechart extends Component {
+  constructor(props) {
+    super(props);
+    this.chart = null;
+  }
+
+  update = () => {
+    this.chart.update();
+  };
+
   componentDidMount = () => {
     const { heading, labels, data, id } = this.props;
     var ctx = document.getElementById(id);
     const backgroundColors = data.map(item => "rgba(96, 159, 235, 0.5)");
     const borderColors = data.map(item => "rgba(96, 159, 235, 1)");
-    var myChart = new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: "line",
       data: {
         labels: labels.reverse(),
