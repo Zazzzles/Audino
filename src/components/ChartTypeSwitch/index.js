@@ -19,7 +19,7 @@ const Icon = ({ white, blue, active = false, onClick }) => {
   );
 };
 export default function ChartTypeSwitch({ onSwitch }) {
-  const [activeType, setActiveType] = useState("line");
+  const [activeType, setActiveType] = useState("curve");
   function handleClick(type) {
     onSwitch(type);
     setActiveType(type);
@@ -38,12 +38,12 @@ export default function ChartTypeSwitch({ onSwitch }) {
         active={activeType === "bar"}
         onClick={() => handleClick("bar")}
       />
-      <Icon
+      {/* <Icon
         white={LineWhite}
         blue={LineBlue}
         active={activeType === "line"}
         onClick={() => handleClick("line")}
-      />
+      /> */}
       <Icon
         white={CurveWhite}
         blue={CurveBlue}

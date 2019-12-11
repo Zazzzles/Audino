@@ -4,6 +4,7 @@ import MonthSelector from "../MonthSelector";
 import ChartTypeSwitch from "../ChartTypeSwitch";
 
 import Linechart from "../Linechart";
+import Barchart from "../Barchart";
 
 import {
   Container,
@@ -17,7 +18,7 @@ export default class MonthlySection extends Component {
     super(props);
     this.state = {
       chartContainerWidth: 0,
-      selectedChartType: "line"
+      selectedChartType: "curve"
     };
     this.chartContainerRef = React.createRef();
   }
@@ -51,8 +52,18 @@ export default class MonthlySection extends Component {
 
         <ChartContainer ref={elem => (this.chartContainerRef = elem)}>
           <ChartWrapper height={400} width={chartContainerWidth}>
-            {selectedChartType === "line" && (
+            {selectedChartType === "curve" && (
               <Linechart
+                id={"1"}
+                heading={"Transactions"}
+                labels={["10/20/2010", "10/20/2010", "10/20/2010"]}
+                data={[23, 41, 32]}
+                height={400}
+                width={chartContainerWidth}
+              />
+            )}
+            {selectedChartType === "bar" && (
+              <Barchart
                 id={"1"}
                 heading={"Transactions"}
                 labels={["10/20/2010", "10/20/2010", "10/20/2010"]}

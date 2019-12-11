@@ -67,6 +67,14 @@ export default class Dropzone extends Component {
     }
   };
 
+  handleManualUpload = e => {
+    let files = Array.from(e.target.files);
+    this.props.handleDrop(files);
+    this.setState({
+      droppedFiles: files
+    });
+  };
+
   componentWillUnmount() {
     let div = this.dropRef.current;
     div.removeEventListener("dragenter", this.handleDragIn);
@@ -80,7 +88,11 @@ export default class Dropzone extends Component {
     return (
       <Container ref={this.dropRef} droppable={dragOver}>
         <FileUploadLabel>
-          <FileUpload type={"file"} />
+          <FileUpload
+            type={"file"}
+            multiple
+            onChange={this.handleManualUpload}
+          />
         </FileUploadLabel>
 
         {droppedFiles.length === 0 ? (
