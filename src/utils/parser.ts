@@ -1,13 +1,37 @@
 //const csv = require("csv-parser");
 const Papa = require("papaparse");
-
+const Stoor = require("stoor");
 interface DataPoint {
   date: String;
   amount: Number;
   ref: String;
 }
-export function parseFile(file: File, onComplete: Function) {
-  Papa.parse(file, { complete: onComplete });
+interface UserFile {
+  name: String;
+  transactions: Array<DataPoint>;
+}
+
+var UserData = new Stoor({ namespace: "audino-data" });
+
+export function parseFiles(files: Array<File>): Promise<Array<UserFile>> {
+  return Promise.all(files.map(file => parse(file))).then(
+    (res: Array<UserFile>) => {
+      UserData.set("userdata", res);
+      return res;
+    }
+  );
+}
+
+function parse(file: File): Promise<UserFile> {
+  return new Promise((resolve, reject) => {
+    Papa.parse(file, {
+      complete: (data: any) =>
+        resolve({
+          name: file.name,
+          transactions: parseResults(data)
+        })
+    });
+  });
 }
 
 export function parseResults(res: any): Array<DataPoint> {

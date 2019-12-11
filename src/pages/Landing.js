@@ -25,15 +25,9 @@ class Landing extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { history } = this.props;
-  //   history.push({
-  //     pathname: "/dash"
-  //   });
-  // }
+  componentDidMount() {}
 
   handleDrop = data => {
-    console.log(data);
     this.setState({
       files: data
     });
@@ -46,10 +40,6 @@ class Landing extends Component {
       pathname: "/dash",
       files
     });
-    // history.push({
-    //   pathname: "/result",
-    //   files
-    // });
   };
 
   render() {

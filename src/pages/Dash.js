@@ -12,26 +12,39 @@ import Navbar from "../components/Navbar";
 import MonthlySection from "../components/MonthlySection";
 //Utils
 import {
-  parseFile,
+  parseFiles,
   parseResults,
   getMonths,
   isolateDate,
   isolateAmount,
   sortByMonth
 } from "../utils/parser";
+import { getFiles } from "../utils/persistence";
 
 class Dash extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      files: [],
+      workingFile: {}
+    };
   }
 
   componentDidMount = async () => {
     const { location } = this.props;
     const { files } = location;
-    console.log(files);
-    //parseFile(files[0], this.parseData);
+    let data = [];
+    if (!files) {
+      data = getFiles();
+    } else {
+      data = await parseFiles(files);
+    }
+    this.setState({ files: data, workingFile: data[0] });
   };
+
+  // parseData = data => {
+  //   console.log(parseResults(data));
+  // };
 
   onBack = () => {
     console.log("going back");
@@ -41,18 +54,33 @@ class Dash extends Component {
     console.log(`${item} clicked`);
   };
 
+  onFileSelected = file => {
+    const { files } = this.state;
+    const workingFile = files.filter(f => f.name === file)[0];
+    this.setState({ workingFile });
+  };
+
   render() {
+    const { files, workingFile } = this.state;
     return (
       <MainWrapper>
         <Topbar onBack={this.onBack} />
-        <LoadedFiles />
-        <ContentContainer>
-          <TransactionList />
-          <NavPanel>
-            <Navbar onClick={this.onNavItemClicked} />
-            <MonthlySection />
-          </NavPanel>
-        </ContentContainer>
+        {files.length !== 0 && (
+          <LoadedFiles
+            files={files.map(file => file.name)}
+            onSelect={this.onFileSelected}
+          />
+        )}
+
+        {workingFile.transactions && (
+          <ContentContainer>
+            <TransactionList transactions={workingFile.transactions} />
+            <NavPanel>
+              <Navbar onClick={this.onNavItemClicked} />
+              <MonthlySection />
+            </NavPanel>
+          </ContentContainer>
+        )}
       </MainWrapper>
     );
   }

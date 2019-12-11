@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { MainWrapper, ChartContainer } from "../styles/Result";
 
 import {
-  parseFile,
+  parseFiles,
   parseResults,
   getMonths,
   isolateDate,
@@ -48,18 +48,18 @@ class Result extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    const { location } = this.props;
-    const { files } = location;
-    parseFile(files[0], this.parseData);
-  };
+  // componentDidMount = async () => {
+  //   const { location } = this.props;
+  //   const { files } = location;
+  //   parseFile(files[0], this.parseData);
+  // };
 
-  parseData = res => {
-    const data = parseResults(res);
-    const months = getMonths(data);
-    const sortedByMonth = sortByMonth(data);
-    this.setState({ data, sortedByMonth });
-  };
+  // parseData = res => {
+  //   const data = parseResults(res);
+  //   const months = getMonths(data);
+  //   const sortedByMonth = sortByMonth(data);
+  //   this.setState({ data, sortedByMonth });
+  // };
 
   renderMonthCharts = data => {
     let toRender = [];
