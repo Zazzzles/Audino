@@ -1,1 +1,1 @@
-![alt text](http://url/to/img.png)
+![Example](https://github.com/Zazzzles/Audino/blob/master/example.png)
