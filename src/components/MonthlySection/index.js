@@ -47,33 +47,56 @@ export default class MonthlySection extends Component {
       sortedByMonthData: []
     };
     this.chartContainerRef = React.createRef();
-    this.lineChart = React.createRef();
+    this.linechart = React.createRef();
     this.barChart = React.createRef();
   }
 
+  componentWillReceiveProps = () => {
+    console.log("Receive props");
+    console.log(this.props);
+    this.update();
+  };
+
   componentDidMount = () => {
+    this.update();
+  };
+
+  update = () => {
     const { transactions } = this.props;
     const months = getMonths(transactions);
     const sortedByMonthData = sortByMonth(transactions);
     let availableMonths = months.map(month => MONTHS[month]);
     if (this.chartContainerRef) {
-      this.setState({
-        chartContainerWidth: this.chartContainerRef.clientWidth,
-        availableMonths,
-        selectedMonth: availableMonths[0],
-        sortedByMonthData
-      });
+      this.setState(
+        {
+          chartContainerWidth: this.chartContainerRef.clientWidth,
+          availableMonths,
+          selectedMonth: availableMonths[0],
+          sortedByMonthData
+        },
+        () => this.updateCharts()
+      );
     }
   };
 
   onMonthSelect = month => {
-    this.setState({ selectedMonth: month });
-    this.lineChart.update();
-    //this.barChart.update();
+    this.setState({ selectedMonth: month }, () => {
+      this.updateCharts();
+    });
   };
 
   onChartTypeSelect = chart => {
     this.setState({ selectedChartType: chart });
+  };
+
+  updateCharts = () => {
+    const { selectedMonth, sortedByMonthData } = this.state;
+    console.log(sortedByMonthData);
+    const monthIndex = MONTHS.indexOf(selectedMonth);
+    const labels = isolateDate(sortedByMonthData[monthIndex]);
+    const data = isolateAmount(sortedByMonthData[monthIndex]);
+    this.lineChart.update && this.lineChart.update(labels, data);
+    this.barChart.update && this.barChart.update(labels, data);
   };
 
   render() {

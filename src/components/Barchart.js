@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import moment from "moment";
 import { Chart } from "chart.js";
 
 export default class BarChart extends Component {
@@ -8,7 +8,16 @@ export default class BarChart extends Component {
     this.chart = null;
   }
 
-  update = () => {
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   this.chart.data.labels = nextProps.labels.reverse();
+  //   this.chart.data.datasets[0].data = nextProps.data.reverse();
+  //   this.chart.update();
+  //   return true;
+  // };
+
+  update = (labels, data) => {
+    this.chart.data.labels = labels.reverse();
+    this.chart.data.datasets[0].data = data.reverse();
     this.chart.update();
   };
 
@@ -36,7 +45,19 @@ export default class BarChart extends Component {
           yAxes: [
             {
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                callback: function(value, index, values) {
+                  return "R" + value;
+                }
+              }
+            }
+          ],
+          xAxes: [
+            {
+              ticks: {
+                callback: function(value, index, values) {
+                  return moment(value).format("DD");
+                }
               }
             }
           ]

@@ -8,7 +8,17 @@ export default class Linechart extends Component {
     this.chart = null;
   }
 
-  update = () => {
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   this.chart.data.labels = nextProps.labels.reverse();
+  //   this.chart.data.datasets[0].data = nextProps.data.reverse();
+  //   this.chart.update();
+  //   return true;
+  // };
+
+  update = (labels, data) => {
+    console.log("Updating");
+    this.chart.data.labels = labels.reverse();
+    this.chart.data.datasets[0].data = data.reverse();
     this.chart.update();
   };
 

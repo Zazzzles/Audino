@@ -50,11 +50,15 @@ class Dash extends Component {
   onFileSelected = file => {
     const { files } = this.state;
     const workingFile = files.filter(f => f.name === file)[0];
-    this.setState({ workingFile });
+    console.log("Setting working file");
+    console.log(workingFile);
+    this.setState({ workingFile }, () => console.log("WF set"));
   };
 
   render() {
     const { files, workingFile } = this.state;
+    console.log("Working file");
+    console.log(workingFile);
     return (
       <MainWrapper>
         <Topbar onBack={this.onBack} />
