@@ -21,11 +21,24 @@ export default class BarChart extends Component {
     this.chart.update();
   };
 
+  setColors = i => {
+    i.backgroundColors.push("#609febad");
+    i.borderColors.push("#609FEB");
+    return i;
+  };
+
   componentDidMount = () => {
     const { heading, labels, data, id } = this.props;
     var ctx = document.getElementById(id);
-    const backgroundColors = data.map(item => "#609febad");
-    const borderColors = data.map(item => "#609FEB");
+    const colors = data.reduce(
+      i => {
+        return this.setColors(i);
+      },
+      {
+        backgroundColors: [],
+        borderColors: []
+      }
+    );
     this.chart = new Chart(ctx, {
       type: "bar",
       data: {
@@ -34,8 +47,8 @@ export default class BarChart extends Component {
           {
             label: heading,
             data: data.reverse(),
-            backgroundColor: backgroundColors,
-            borderColor: borderColors,
+            backgroundColor: colors.backgroundColors,
+            borderColor: colors.borderColors,
             borderWidth: 1
           }
         ]

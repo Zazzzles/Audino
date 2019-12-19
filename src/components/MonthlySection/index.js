@@ -52,8 +52,6 @@ export default class MonthlySection extends Component {
   }
 
   componentWillReceiveProps = () => {
-    console.log("Receive props");
-    console.log(this.props);
     this.update();
   };
 
@@ -91,12 +89,13 @@ export default class MonthlySection extends Component {
 
   updateCharts = () => {
     const { selectedMonth, sortedByMonthData } = this.state;
-    console.log(sortedByMonthData);
     const monthIndex = MONTHS.indexOf(selectedMonth);
     const labels = isolateDate(sortedByMonthData[monthIndex]);
     const data = isolateAmount(sortedByMonthData[monthIndex]);
-    this.lineChart.update && this.lineChart.update(labels, data);
-    this.barChart.update && this.barChart.update(labels, data);
+    this.lineChart &&
+      this.lineChart.update &&
+      this.lineChart.update(labels, data);
+    this.barChart && this.barChart.update && this.barChart.update(labels, data);
   };
 
   render() {

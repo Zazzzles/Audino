@@ -22,11 +22,24 @@ export default class Linechart extends Component {
     this.chart.update();
   };
 
+  setColors = i => {
+    i.backgroundColors.push("rgba(96, 159, 235, 0.5)");
+    i.borderColors.push("rgba(96, 159, 235, 1)");
+    return i;
+  };
+
   componentDidMount = () => {
     const { heading, labels, data, id } = this.props;
     var ctx = document.getElementById(id);
-    const backgroundColors = data.map(item => "rgba(96, 159, 235, 0.5)");
-    const borderColors = data.map(item => "rgba(96, 159, 235, 1)");
+    const colors = data.reduce(
+      i => {
+        return this.setColors(i);
+      },
+      {
+        backgroundColors: [],
+        borderColors: []
+      }
+    );
     this.chart = new Chart(ctx, {
       type: "line",
       data: {
@@ -35,8 +48,8 @@ export default class Linechart extends Component {
           {
             label: heading,
             data: data.reverse(),
-            backgroundColor: backgroundColors,
-            borderColor: borderColors,
+            backgroundColor: colors.backgroundColors,
+            borderColor: colors.borderColors,
             borderWidth: 1
           }
         ]
