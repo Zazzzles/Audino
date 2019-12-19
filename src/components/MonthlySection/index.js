@@ -63,7 +63,7 @@ export default class MonthlySection extends Component {
     const { transactions } = this.props;
     const months = getMonths(transactions);
     const sortedByMonthData = sortByMonth(transactions);
-    let availableMonths = months.map(month => MONTHS[month]);
+    let availableMonths = months.map(month => MONTHS[month - 1]);
     if (this.chartContainerRef) {
       this.setState(
         {
@@ -84,14 +84,16 @@ export default class MonthlySection extends Component {
   };
 
   onChartTypeSelect = chart => {
-    this.setState({ selectedChartType: chart });
+    this.setState({ selectedChartType: chart }, () => {
+      this.updateCharts();
+    });
   };
 
   updateCharts = () => {
     const { selectedMonth, sortedByMonthData } = this.state;
     const monthIndex = MONTHS.indexOf(selectedMonth);
-    const labels = isolateDate(sortedByMonthData[monthIndex]);
-    const data = isolateAmount(sortedByMonthData[monthIndex]);
+    const labels = isolateDate(sortedByMonthData[monthIndex + 1]);
+    const data = isolateAmount(sortedByMonthData[monthIndex + 1]);
     this.lineChart &&
       this.lineChart.update &&
       this.lineChart.update(labels, data);
@@ -103,10 +105,8 @@ export default class MonthlySection extends Component {
       chartContainerWidth,
       selectedChartType,
       availableMonths,
-      selectedMonth,
       sortedByMonthData
     } = this.state;
-    const monthIndex = MONTHS.indexOf(selectedMonth);
     return (
       <Container>
         <SelectionBar>
@@ -128,8 +128,8 @@ export default class MonthlySection extends Component {
                   ref={elem => (this.lineChart = elem)}
                   id={"1"}
                   heading={"Transactions"}
-                  labels={isolateDate(sortedByMonthData[monthIndex])}
-                  data={isolateAmount(sortedByMonthData[monthIndex])}
+                  labels={[]}
+                  data={[]}
                   height={400}
                   width={chartContainerWidth}
                 />
@@ -139,8 +139,8 @@ export default class MonthlySection extends Component {
                   ref={elem => (this.barChart = elem)}
                   id={"1"}
                   heading={"Transactions"}
-                  labels={isolateDate(sortedByMonthData[monthIndex])}
-                  data={isolateAmount(sortedByMonthData[monthIndex])}
+                  labels={[]}
+                  data={[]}
                   height={400}
                   width={chartContainerWidth}
                 />

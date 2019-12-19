@@ -16,8 +16,19 @@ export default class BarChart extends Component {
   // };
 
   update = (labels, data) => {
+    const colors = data.reduce(
+      i => {
+        return this.setColors(i);
+      },
+      {
+        backgroundColors: [],
+        borderColors: []
+      }
+    );
     this.chart.data.labels = labels.reverse();
     this.chart.data.datasets[0].data = data.reverse();
+    this.chart.data.datasets[0].backgroundColor = colors.backgroundColors;
+    this.chart.data.datasets[0].borderColor = colors.borderColors;
     this.chart.update();
   };
 
@@ -30,15 +41,7 @@ export default class BarChart extends Component {
   componentDidMount = () => {
     const { heading, labels, data, id } = this.props;
     var ctx = document.getElementById(id);
-    const colors = data.reduce(
-      i => {
-        return this.setColors(i);
-      },
-      {
-        backgroundColors: [],
-        borderColors: []
-      }
-    );
+
     this.chart = new Chart(ctx, {
       type: "bar",
       data: {
@@ -47,8 +50,8 @@ export default class BarChart extends Component {
           {
             label: heading,
             data: data.reverse(),
-            backgroundColor: colors.backgroundColors,
-            borderColor: colors.borderColors,
+            backgroundColor: [],
+            borderColor: [],
             borderWidth: 1
           }
         ]

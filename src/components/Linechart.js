@@ -8,17 +8,21 @@ export default class Linechart extends Component {
     this.chart = null;
   }
 
-  // shouldComponentUpdate = (nextProps, nextState) => {
-  //   this.chart.data.labels = nextProps.labels.reverse();
-  //   this.chart.data.datasets[0].data = nextProps.data.reverse();
-  //   this.chart.update();
-  //   return true;
-  // };
-
+  //TODO: Update colors here aswell
   update = (labels, data) => {
-    console.log("Updating");
+    const colors = data.reduce(
+      i => {
+        return this.setColors(i);
+      },
+      {
+        backgroundColors: [],
+        borderColors: []
+      }
+    );
     this.chart.data.labels = labels.reverse();
     this.chart.data.datasets[0].data = data.reverse();
+    this.chart.data.datasets[0].backgroundColor = colors.backgroundColors;
+    this.chart.data.datasets[0].borderColor = colors.borderColors;
     this.chart.update();
   };
 
@@ -31,15 +35,7 @@ export default class Linechart extends Component {
   componentDidMount = () => {
     const { heading, labels, data, id } = this.props;
     var ctx = document.getElementById(id);
-    const colors = data.reduce(
-      i => {
-        return this.setColors(i);
-      },
-      {
-        backgroundColors: [],
-        borderColors: []
-      }
-    );
+
     this.chart = new Chart(ctx, {
       type: "line",
       data: {
@@ -48,8 +44,8 @@ export default class Linechart extends Component {
           {
             label: heading,
             data: data.reverse(),
-            backgroundColor: colors.backgroundColors,
-            borderColor: colors.borderColors,
+            backgroundColor: [],
+            borderColor: [],
             borderWidth: 1
           }
         ]
