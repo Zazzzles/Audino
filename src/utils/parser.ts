@@ -1,6 +1,8 @@
 //const csv = require("csv-parser");
 const Papa = require("papaparse");
 const Stoor = require("stoor");
+
+const { formatDate, isValidDate, getMonthNumber } = require("./methods");
 interface DataPoint {
   date: String;
   amount: Number;
@@ -36,25 +38,9 @@ function parse(file: File): Promise<UserFile> {
   });
 }
 
-//  Convert dates to use / notation
-function formatDate(date: String): String {
-  if (date.includes("-")) {
-    date = date.replace(/-/g, "/");
-    const split = date.split("/");
-    if (split[2].length === 4) {
-      date = `${split[2]}/${split[1]}/${split[0]}`;
-    }
-  }
-  return date;
-}
-
-//  Check if date is valid
-function isValidDate(date: String): Boolean {
-  return date.includes("/");
-}
-
 export function parseResults(res: any): Array<DataPoint> {
   let data: Array<DataPoint> = [];
+  //  Parse transactions into common shape
   res.data.map((item: any) => {
     //FNB date/amount/balance/ref
     if (item["0"] && item["1"] && item["3"]) {
@@ -78,15 +64,7 @@ export function parseResults(res: any): Array<DataPoint> {
       }
     }
   });
-  //console.log(data);
-  // data.forEach((item) => {
-
-  // })
   return data;
-}
-
-function getMonthNumber(date: String): number {
-  return parseInt(date.split("/")[1]);
 }
 
 export function getMonths(data: Array<DataPoint>): Array<Number> {
@@ -109,12 +87,4 @@ export function sortByMonth(data: Array<any>): Array<Array<DataPoint>> {
     }
   });
   return sorted;
-}
-
-export function isolateDate(data: Array<any>): Array<String> {
-  return data.map(item => item.date);
-}
-
-export function isolateAmount(data: Array<any>): Array<Number> {
-  return data.map(item => item.amount);
 }

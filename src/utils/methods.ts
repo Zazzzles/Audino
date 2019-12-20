@@ -1,0 +1,75 @@
+interface DataPoint {
+  date: string;
+  amount: number;
+  ref: String;
+}
+
+interface TotalPoint {
+  date: String;
+  transactions: Number;
+  amount: Number;
+}
+
+interface Buffer {
+  [key: string]: [DataPoint];
+}
+
+export function addAmounts(data: [DataPoint]): Array<TotalPoint> {
+  let buffer: Buffer = {};
+  let sorted: Array<TotalPoint> = [];
+  //    Buffer via dates
+  data.forEach((item: DataPoint) => {
+    const { date } = item;
+    if (buffer[date]) {
+      buffer[date].push(item);
+    } else {
+      buffer[date] = [item];
+    }
+  });
+  //    Add amounts and count transactions
+  Object.keys(buffer).forEach(key => {
+    let total: number = 0;
+    buffer[key].forEach(item => {
+      const { amount } = item;
+      total = total + amount;
+    });
+    sorted.push({
+      date: key,
+      transactions: buffer[key].length,
+      amount: total
+    });
+  });
+
+  return sorted;
+}
+
+//  Convert dates to use / notation
+export function formatDate(date: String): String {
+  if (date.includes("-")) {
+    date = date.replace(/-/g, "/");
+    const split = date.split("/");
+    if (split[2].length === 4) {
+      date = `${split[2]}/${split[1]}/${split[0]}`;
+    }
+  }
+  return date;
+}
+
+//  Check if date is valid
+export function isValidDate(date: String): Boolean {
+  return date.includes("/");
+}
+
+export function getMonthNumber(date: String): number {
+  return parseInt(date.split("/")[1]);
+}
+
+//  Get array of dates from array of datapoints
+export function isolateDate(data: Array<DataPoint>): Array<String> {
+  return data.map(item => item.date);
+}
+
+//  Get array of amounts from array of datapoints
+export function isolateAmount(data: Array<DataPoint>): Array<Number> {
+  return data.map(item => item.amount);
+}

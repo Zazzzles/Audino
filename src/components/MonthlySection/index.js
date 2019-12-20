@@ -13,13 +13,7 @@ import {
   ChartWrapper
 } from "./styles";
 
-import {
-  parseResults,
-  getMonths,
-  isolateDate,
-  isolateAmount,
-  sortByMonth
-} from "../../utils/parser";
+import { getMonths, sortByMonth } from "../../utils/parser";
 
 const MONTHS = [
   "January",
@@ -92,12 +86,9 @@ export default class MonthlySection extends Component {
   updateCharts = () => {
     const { selectedMonth, sortedByMonthData } = this.state;
     const monthIndex = MONTHS.indexOf(selectedMonth);
-    const labels = isolateDate(sortedByMonthData[monthIndex + 1]);
-    const data = isolateAmount(sortedByMonthData[monthIndex + 1]);
-    this.lineChart &&
-      this.lineChart.update &&
-      this.lineChart.update(labels, data);
-    this.barChart && this.barChart.update && this.barChart.update(labels, data);
+    const data = sortedByMonthData[monthIndex + 1];
+    this.lineChart && this.lineChart.update && this.lineChart.update(data);
+    this.barChart && this.barChart.update && this.barChart.update(data);
   };
 
   render() {

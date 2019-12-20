@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Chart } from "chart.js";
 
+import { addAmounts, isolateAmount, isolateDate } from "../utils/methods";
+
 export default class Linechart extends Component {
   constructor(props) {
     super(props);
@@ -9,27 +11,29 @@ export default class Linechart extends Component {
   }
 
   //TODO: Update colors here aswell
-  update = (labels, data) => {
-    const colors = data.reduce(
+  update = data => {
+    const formattedData = addAmounts(data.reverse());
+    this.chart.data.labels = isolateDate(formattedData);
+    this.chart.data.datasets[0].data = isolateAmount(formattedData);
+    this.chart.data.datasets[0].backgroundColor = this.getColors(
+      data
+    ).backgroundColors;
+    this.chart.data.datasets[0].borderColor = this.getColors(data).borderColors;
+    this.chart.update();
+  };
+
+  getColors = data => {
+    return data.reduce(
       i => {
-        return this.setColors(i);
+        i.backgroundColors.push("rgba(96, 159, 235, 0.5)");
+        i.borderColors.push("rgba(96, 159, 235, 1)");
+        return i;
       },
       {
         backgroundColors: [],
         borderColors: []
       }
     );
-    this.chart.data.labels = labels.reverse();
-    this.chart.data.datasets[0].data = data.reverse();
-    this.chart.data.datasets[0].backgroundColor = colors.backgroundColors;
-    this.chart.data.datasets[0].borderColor = colors.borderColors;
-    this.chart.update();
-  };
-
-  setColors = i => {
-    i.backgroundColors.push("rgba(96, 159, 235, 0.5)");
-    i.borderColors.push("rgba(96, 159, 235, 1)");
-    return i;
   };
 
   componentDidMount = () => {
