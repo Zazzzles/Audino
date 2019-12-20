@@ -43,7 +43,7 @@ export const RightContainer = styled.div`
   align-items: center;
   height: 100vh;
   box-sizing: border-box;
-  padding-top: 300px;
+  padding-top: 250px;
   width: 55vw;
   @media (max-width: 1000px) {
     display: none;
