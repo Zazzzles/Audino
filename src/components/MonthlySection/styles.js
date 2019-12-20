@@ -5,6 +5,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: scroll;
+  padding: 1px;
 `;
 
 export const SelectionBar = styled.div`
@@ -17,7 +19,7 @@ export const SelectionBar = styled.div`
 `;
 
 export const ChartContainer = styled.div`
-  height: 400px;
+  height: 330px;
   width: 100%;
   display: flex;
   flex-direction: row;

@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import MonthSelector from "../MonthSelector";
 import ChartTypeSwitch from "../ChartTypeSwitch";
 
-import Linechart from "../Linechart";
-import Barchart from "../Barchart";
+import Linechart from "../charts/Linechart";
+import Barchart from "../charts/Barchart";
 
 import {
   Container,
@@ -13,7 +13,14 @@ import {
   ChartWrapper
 } from "./styles";
 
-import { getMonths, sortByMonth } from "../../utils/methods";
+import {
+  getMonths,
+  sortByMonth,
+  isolateDate,
+  addAmounts,
+  isolateAmount,
+  isolateTransactionCounts
+} from "../../utils/methods";
 
 const MONTHS = [
   "January",
@@ -43,6 +50,7 @@ export default class MonthlySection extends Component {
     this.chartContainerRef = React.createRef();
     this.linechart = React.createRef();
     this.barChart = React.createRef();
+    this.barChartTransactions = React.createRef();
   }
 
   componentWillReceiveProps = () => {
@@ -86,9 +94,38 @@ export default class MonthlySection extends Component {
   updateCharts = () => {
     const { selectedMonth, sortedByMonthData } = this.state;
     const monthIndex = MONTHS.indexOf(selectedMonth);
-    const data = sortedByMonthData[monthIndex + 1];
-    this.lineChart && this.lineChart.update && this.lineChart.update(data);
-    this.barChart && this.barChart.update && this.barChart.update(data);
+    const rawData = addAmounts(sortedByMonthData[monthIndex + 1]);
+    const data = isolateAmount(rawData);
+    const transactions = isolateTransactionCounts(rawData);
+    const labels = isolateDate(rawData);
+    this.lineChart &&
+      this.lineChart.update &&
+      this.lineChart.update({
+        data,
+        labels,
+        key: "Amount",
+        reverse: true,
+        yAxisToken: "R"
+      });
+    this.barChart &&
+      this.barChart.update &&
+      this.barChart.update({
+        data,
+        labels,
+        key: "Amount",
+        reverse: true,
+        yAxisToken: "R"
+      });
+
+    this.barChartTransactions &&
+      this.barChartTransactions.update &&
+      this.barChartTransactions.update({
+        data: transactions,
+        labels,
+        key: "Transaction counts",
+        reverse: false,
+        yAxisToken: ""
+      });
   };
 
   render() {
@@ -113,15 +150,14 @@ export default class MonthlySection extends Component {
 
         <ChartContainer ref={elem => (this.chartContainerRef = elem)}>
           {sortedByMonthData.length !== 0 && (
-            <ChartWrapper height={400} width={chartContainerWidth}>
+            <ChartWrapper height={330} width={chartContainerWidth}>
               {selectedChartType === "curve" && (
                 <Linechart
                   ref={elem => (this.lineChart = elem)}
                   id={"1"}
-                  heading={"Transactions"}
-                  labels={[]}
-                  data={[]}
-                  height={400}
+                  height={330}
+                  lineColor={"rgba(96, 159, 235, 1)"}
+                  bgColor={"rgba(96, 159, 235, 0.5)"}
                   width={chartContainerWidth}
                 />
               )}
@@ -129,13 +165,27 @@ export default class MonthlySection extends Component {
                 <Barchart
                   ref={elem => (this.barChart = elem)}
                   id={"1"}
-                  heading={"Transactions"}
-                  labels={[]}
-                  data={[]}
-                  height={400}
+                  height={330}
+                  lineColor={"rgba(96, 159, 235, 1)"}
+                  bgColor={"rgba(96, 159, 235, 0.5)"}
                   width={chartContainerWidth}
                 />
               )}
+            </ChartWrapper>
+          )}
+        </ChartContainer>
+        <br />
+        <ChartContainer ref={elem => (this.chartContainerRef = elem)}>
+          {sortedByMonthData.length !== 0 && (
+            <ChartWrapper height={330} width={chartContainerWidth}>
+              <Barchart
+                ref={elem => (this.barChartTransactions = elem)}
+                id={"2"}
+                height={330}
+                lineColor={"rgba(255, 61, 135, 1)"}
+                bgColor={"rgba(255, 61, 135, 0.5)"}
+                width={chartContainerWidth}
+              />
             </ChartWrapper>
           )}
         </ChartContainer>

@@ -74,6 +74,13 @@ export function isolateAmount(data: Array<DataPoint>): Array<Number> {
   return data.map(item => item.amount);
 }
 
+//  Get array of transaction amounts from array of totalPoints
+export function isolateTransactionCounts(
+  data: Array<TotalPoint>
+): Array<Number> {
+  return data.map(item => item.transactions);
+}
+
 //  Get months numbers from collection of datapoints
 export function getMonths(data: Array<DataPoint>): Array<Number> {
   let months: Array<any> = [];
