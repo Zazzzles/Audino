@@ -54,6 +54,9 @@ export const LoadedFilesContainer = styled.div`
   text-align: center;
   margin-top: 50px;
   color: white;
+  border: 1px solid #ffffff3b;
+  border-radius: 5px;
+  padding: 11px;
   @media (max-width: 1000px) {
     display: none;
   }
@@ -75,4 +78,25 @@ export const MobileOnly = styled.div`
   @media (max-width: 1000px) {
     display: block;
   }
+`;
+
+export const LoadExample = styled.a`
+  cursor: pointer;
+  color: white;
+  margin-top: 50px;
+  margin-bottom: -50px;
+  font-weight: 500;
+  text-decoration: none;
+`;
+
+export const BankContainer = styled.div`
+  margin-top: -100px;
+  margin-bottom: 50px;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+export const BankImage = styled.img`
+  height: 60px;
 `;

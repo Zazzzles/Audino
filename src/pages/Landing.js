@@ -13,8 +13,15 @@ import {
   LoadedFilesContainer,
   Continue,
   MobileOnly,
-  ContentWrapper
+  LoadExample,
+  BankContainer,
+  BankImage
 } from "../styles/Landing";
+
+import Fnb from "../assets/banks/fnb.png";
+import Nedbank from "../assets/banks/nedbank.png";
+
+import Example from "../assets/example.csv";
 
 import Dropzone from "../components/Dropzone";
 
@@ -34,7 +41,7 @@ class Landing extends Component {
 
   async componentDidMount() {
     let files = await getFiles();
-    if (files.length !== 0) {
+    if (files && files.length !== 0) {
       this.setState({ loadedFiles: files });
     }
   }
@@ -66,6 +73,11 @@ class Landing extends Component {
     return (
       <MainWrapper image={BG}>
         <CenterContainer>
+          <BankContainer>
+            <BankImage src={Fnb} />
+            <BankImage src={Nedbank} />
+          </BankContainer>
+
           <LogoImage src={Logo} />
           <Tagline>Personal finance, visualised</Tagline>
 
@@ -83,6 +95,10 @@ class Landing extends Component {
               <Continue onClick={this.handleView}>view current files</Continue>
             </LoadedFilesContainer>
           )}
+
+          <LoadExample href={Example} download>
+            Load an example
+          </LoadExample>
 
           <Dropzone handleDrop={this.handleDrop} />
           {files.length !== 0 ? (

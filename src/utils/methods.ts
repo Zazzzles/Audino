@@ -43,19 +43,33 @@ export function addAmounts(data: [DataPoint]): Array<TotalPoint> {
   return sorted;
 }
 
-//  Convert dates to use / notation
 export function formatDate(date: String): String {
+  //  Expected format is yyyy/mm/dd
+  let split: Array<String> = [];
   if (date.includes("-")) {
-    date = date.replace(/-/g, "/");
-    const split = date.split("/");
+    split = date.split("-");
+  }
+  if (date.includes("/")) {
+    split = date.split("/");
+  }
+  if (split.length !== 0) {
+    //yyyy/mm/dd
+    if (split[0].length === 4) {
+      date = `${split[0]}/${split[1]}/${split[2]}`;
+    }
+    //dd/mm/yyyy
     if (split[2].length === 4) {
       date = `${split[2]}/${split[1]}/${split[0]}`;
+    }
+    //mm/dd/yy
+    if (split[0].length !== 4 && split[2].length !== 4) {
+      date = `20${split[2]}/${split[0]}/${split[1]}`;
     }
   }
   return date;
 }
 
-//  Check if date is valid
+//  Check if date is valid yyyy/mm/dd
 export function isValidDate(date: String): Boolean {
   return date.includes("/");
 }

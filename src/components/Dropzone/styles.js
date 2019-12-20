@@ -39,16 +39,3 @@ export const FileLabel = styled.span`
   font-weight: 500;
   font-size: 17px;
 `;
-
-export const BankContainer = styled.div`
-  position: absolute;
-  margin-left: 180px;
-  margin-top: -5px;
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`;
-
-export const BankImage = styled.img`
-  height: 60px;
-`;

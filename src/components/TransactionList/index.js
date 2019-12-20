@@ -16,8 +16,8 @@ const Row = ({ date, reference, amount }) => {
       <RowLabel width={100} date>
         {date}
       </RowLabel>
-      <RowLabel width={260}>{reference}</RowLabel>
-      <RowLabel width={40} amount>
+      <RowLabel width={240}>{reference}</RowLabel>
+      <RowLabel width={60} amount>
         R{amount}
       </RowLabel>
     </DataRow>
@@ -30,7 +30,7 @@ export default function TransactionList({ transactions = [] }) {
       <TopBar>
         <ColLabel width={100}>Date</ColLabel>
         <ColLabel width={240}>Reference</ColLabel>
-        <ColLabel width={50}>Amount</ColLabel>
+        <ColLabel width={60}>Amount</ColLabel>
       </TopBar>
       <TransactionsLabel>{transactions.length} transactions</TransactionsLabel>
       <RowContainer>

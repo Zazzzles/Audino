@@ -5,13 +5,8 @@ import {
   Label,
   FileLabel,
   FileUpload,
-  FileUploadLabel,
-  BankContainer,
-  BankImage
+  FileUploadLabel
 } from "./styles";
-
-import Fnb from "../../assets/banks/fnb.png";
-import Nedbank from "../../assets/banks/nedbank.png";
 
 export default class Dropzone extends Component {
   constructor(props) {
@@ -92,10 +87,6 @@ export default class Dropzone extends Component {
     const { dragOver, droppedFiles } = this.state;
     return (
       <>
-        <BankContainer>
-          <BankImage src={Fnb} />
-          <BankImage src={Nedbank} />
-        </BankContainer>
         <Container ref={this.dropRef} droppable={dragOver}>
           <FileUploadLabel>
             <FileUpload
