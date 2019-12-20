@@ -40,7 +40,10 @@ class Dash extends Component {
   // };
 
   onBack = () => {
-    console.log("going back");
+    const { history } = this.props;
+    history.push({
+      pathname: "/"
+    });
   };
 
   onNavItemClicked = item => {

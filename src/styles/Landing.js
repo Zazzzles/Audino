@@ -48,3 +48,16 @@ export const ButtonText = styled.span`
   font-size: 20px;
   font-weight: 800;
 `;
+
+export const LoadedFilesContainer = styled.div`
+  font-weight: 600;
+  text-align: center;
+  margin-top: 50px;
+  color: white;
+`;
+
+export const Continue = styled.span`
+  font-weight: 600;
+  color: #8dccf2;
+  cursor: pointer;
+`;
