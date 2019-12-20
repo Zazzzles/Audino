@@ -4,7 +4,6 @@ export const Container = styled.div`
   height: 300px;
   width: 500px;
   border: 2px dashed white;
-  margin-top: 100px;
   background-color: ${props => (props.droppable ? "#ffffff36;" : "transparent")}
   border-radius: 20px;
   display: flex;

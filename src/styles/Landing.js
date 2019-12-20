@@ -6,16 +6,54 @@ export const MainWrapper = styled.div`
   background-size: cover;
   background-image: url(${props => props.image});
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 `;
 
-export const CenterContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+export const MobileWrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background-image: url(${props => props.image});
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  display: none;
+  @media (max-width: 1000px) {
+    display: flex;
+  }
+`;
+
+export const LeftContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  padding-top: 300px;
+  width: 40vw;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+export const RightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  padding-top: 300px;
+  width: 55vw;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+export const LogoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const LogoImage = styled.img`
@@ -23,15 +61,52 @@ export const LogoImage = styled.img`
 `;
 
 export const Tagline = styled.span`
+  color: #be74ed;
+  @media (max-width: 1000px) {
+    color: white;
+  }
+`;
+
+export const DropzoneTopbar = styled.div`
+  width: 500px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: centerl
+  justify-content: space-between;
+`;
+
+export const BankContainer = styled.div`
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+export const BankImage = styled.img`
+  height: 60px;
+`;
+
+export const LoadedFilesContainer = styled.div`
+  text-align: right;
+  font-size: 16px;
   color: white;
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+export const Continue = styled.span`
+  font-weight: 600;
+  color: #39b1ee;
+  cursor: pointer;
 `;
 
 export const ContinueButton = styled.div`
   height: 50px;
-  width: 300px;
+  width: 500px;
+  margin-top: 20px;
   background-color: white;
   border-radius: 15px;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,27 +124,7 @@ export const ButtonText = styled.span`
   font-weight: 800;
 `;
 
-export const LoadedFilesContainer = styled.div`
-  font-weight: 600;
-  text-align: center;
-  margin-top: 50px;
-  color: white;
-  border: 1px solid #ffffff3b;
-  border-radius: 5px;
-  padding: 11px;
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`;
-
-export const Continue = styled.span`
-  font-weight: 600;
-  color: #8dccf2;
-  cursor: pointer;
-`;
-
 export const MobileOnly = styled.div`
-  font-weight: 600;
   text-align: center;
   margin-top: 50px;
   color: white;
@@ -83,20 +138,13 @@ export const MobileOnly = styled.div`
 export const LoadExample = styled.a`
   cursor: pointer;
   color: white;
-  margin-top: 50px;
-  margin-bottom: -50px;
-  font-weight: 500;
+  width: 500px;
+  text-align: right;
+  margin-top: 15px;
   text-decoration: none;
 `;
 
-export const BankContainer = styled.div`
-  margin-top: -100px;
-  margin-bottom: 50px;
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`;
-
-export const BankImage = styled.img`
-  height: 60px;
+export const ExampleText = styled.span`
+  font-weight: 600;
+  color: #39b1ee;
 `;

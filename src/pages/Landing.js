@@ -4,9 +4,10 @@ import { withRouter } from "react-router-dom";
 
 import {
   MainWrapper,
+  LogoContainer,
   LogoImage,
-  CenterContainer,
   Tagline,
+  DropzoneTopbar,
   ContinueButton,
   ButtonText,
   ContinueButtonPlaceholder,
@@ -15,7 +16,11 @@ import {
   MobileOnly,
   LoadExample,
   BankContainer,
-  BankImage
+  BankImage,
+  LeftContainer,
+  RightContainer,
+  MobileWrapper,
+  ExampleText
 } from "../styles/Landing";
 
 import Fnb from "../assets/banks/fnb.png";
@@ -27,8 +32,10 @@ import Dropzone from "../components/Dropzone";
 
 import { getFiles } from "../utils/persistence";
 
-import BG from "../assets/bg.png";
-import Logo from "../assets/logo.png";
+import BG from "../assets/landing.jpg";
+import BGmobile from "../assets/bg.png";
+import Logo from "../assets/logo_grad.png";
+import LogoWhite from "../assets/logo.png";
 
 class Landing extends Component {
   constructor(props) {
@@ -72,35 +79,47 @@ class Landing extends Component {
     const { files, loadedFiles } = this.state;
     return (
       <MainWrapper image={BG}>
-        <CenterContainer>
-          <BankContainer>
-            <BankImage src={Fnb} />
-            <BankImage src={Nedbank} />
-          </BankContainer>
-
-          <LogoImage src={Logo} />
-          <Tagline>Personal finance, visualised</Tagline>
-
+        <MobileWrapper image={BGmobile}>
+          <LogoContainer>
+            <LogoImage src={LogoWhite} />
+            <Tagline>Personal finance, visualised</Tagline>
+          </LogoContainer>
           <MobileOnly>
-            Currently we don't support mobile browsers. Sorry about that! Use a
-            desktop browser instead!
+            Currently we don't support mobile browsers. Sorry about that! <br />{" "}
+            Use a desktop browser instead!
           </MobileOnly>
+        </MobileWrapper>
 
-          {loadedFiles.length !== 0 && (
-            <LoadedFilesContainer>
-              You have {loadedFiles.length}
-              {loadedFiles.length > 1 ? " files" : " file"} loaded.
-              <br />
-              Drop new ones or{" "}
-              <Continue onClick={this.handleView}>view current files</Continue>
-            </LoadedFilesContainer>
-          )}
+        <LeftContainer>
+          <LogoContainer>
+            <LogoImage src={Logo} />
+            <Tagline>Personal finance, visualised</Tagline>
+          </LogoContainer>
+        </LeftContainer>
+        <RightContainer>
+          <DropzoneTopbar>
+            <BankContainer>
+              <BankImage src={Fnb} />
+              <BankImage src={Nedbank} />
+            </BankContainer>
 
+            {loadedFiles.length !== 0 && (
+              <LoadedFilesContainer>
+                You have {loadedFiles.length}
+                {loadedFiles.length > 1 ? " files" : " file"} loaded.
+                <br />
+                Drop new ones or{" "}
+                <Continue onClick={this.handleView}>
+                  view current files
+                </Continue>
+              </LoadedFilesContainer>
+            )}
+          </DropzoneTopbar>
+          <Dropzone handleDrop={this.handleDrop} />
           <LoadExample href={Example} download>
-            Load an example
+            Don't have a file? <ExampleText>Load an example</ExampleText>
           </LoadExample>
 
-          <Dropzone handleDrop={this.handleDrop} />
           {files.length !== 0 ? (
             <ContinueButton onClick={this.handleContinue}>
               <ButtonText>Continue</ButtonText>
@@ -108,7 +127,7 @@ class Landing extends Component {
           ) : (
             <ContinueButtonPlaceholder></ContinueButtonPlaceholder>
           )}
-        </CenterContainer>
+        </RightContainer>
       </MainWrapper>
     );
   }
