@@ -13,7 +13,7 @@ import {
   ChartWrapper
 } from "./styles";
 
-import { getMonths, sortByMonth } from "../../utils/parser";
+import { getMonths, sortByMonth } from "../../utils/methods";
 
 const MONTHS = [
   "January",

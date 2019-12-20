@@ -66,25 +66,3 @@ export function parseResults(res: any): Array<DataPoint> {
   });
   return data;
 }
-
-export function getMonths(data: Array<DataPoint>): Array<Number> {
-  let months: Array<any> = [];
-  data.forEach(item => {
-    let month = getMonthNumber(item.date);
-    months.includes(month) || months.push(month);
-  });
-  return months.reverse();
-}
-
-export function sortByMonth(data: Array<any>): Array<Array<DataPoint>> {
-  let sorted: any = {};
-  data.forEach(item => {
-    let month = getMonthNumber(item.date);
-    if (sorted[month]) {
-      sorted[month].push(item);
-    } else {
-      sorted[month] = [item];
-    }
-  });
-  return sorted;
-}

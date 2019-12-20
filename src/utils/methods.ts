@@ -73,3 +73,28 @@ export function isolateDate(data: Array<DataPoint>): Array<String> {
 export function isolateAmount(data: Array<DataPoint>): Array<Number> {
   return data.map(item => item.amount);
 }
+
+//  Get months numbers from collection of datapoints
+export function getMonths(data: Array<DataPoint>): Array<Number> {
+  let months: Array<any> = [];
+  data.forEach(item => {
+    let month = getMonthNumber(item.date);
+    months.includes(month) || months.push(month);
+  });
+  return months.reverse();
+}
+
+//  FIXME: Possibly rather go for using month names as object keys
+//  Return sorted datapoints by month
+export function sortByMonth(data: Array<any>): Array<Array<DataPoint>> {
+  let sorted: any = {};
+  data.forEach(item => {
+    let month = getMonthNumber(item.date);
+    if (sorted[month]) {
+      sorted[month].push(item);
+    } else {
+      sorted[month] = [item];
+    }
+  });
+  return sorted;
+}

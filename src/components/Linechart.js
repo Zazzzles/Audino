@@ -10,7 +10,6 @@ export default class Linechart extends Component {
     this.chart = null;
   }
 
-  //TODO: Update colors here aswell
   update = data => {
     const formattedData = addAmounts(data.reverse());
     this.chart.data.labels = isolateDate(formattedData);
