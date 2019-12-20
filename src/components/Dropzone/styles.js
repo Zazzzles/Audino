@@ -12,6 +12,9 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   transition: all 0.3s;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const FileUpload = styled.input`
@@ -41,6 +44,9 @@ export const BankContainer = styled.div`
   position: absolute;
   margin-left: 180px;
   margin-top: -5px;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const BankImage = styled.img`

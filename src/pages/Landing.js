@@ -11,7 +11,9 @@ import {
   ButtonText,
   ContinueButtonPlaceholder,
   LoadedFilesContainer,
-  Continue
+  Continue,
+  MobileOnly,
+  ContentWrapper
 } from "../styles/Landing";
 
 import Dropzone from "../components/Dropzone";
@@ -66,6 +68,12 @@ class Landing extends Component {
         <CenterContainer>
           <LogoImage src={Logo} />
           <Tagline>Personal finance, visualised</Tagline>
+
+          <MobileOnly>
+            Currently we don't support mobile browsers. Sorry about that! Use a
+            desktop browser instead!
+          </MobileOnly>
+
           {loadedFiles.length !== 0 && (
             <LoadedFilesContainer>
               You have {loadedFiles.length}

@@ -54,10 +54,25 @@ export const LoadedFilesContainer = styled.div`
   text-align: center;
   margin-top: 50px;
   color: white;
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const Continue = styled.span`
   font-weight: 600;
   color: #8dccf2;
   cursor: pointer;
+`;
+
+export const MobileOnly = styled.div`
+  font-weight: 600;
+  text-align: center;
+  margin-top: 50px;
+  color: white;
+  display: none;
+  width: 80vw;
+  @media (max-width: 1000px) {
+    display: block;
+  }
 `;
