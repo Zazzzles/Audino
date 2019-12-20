@@ -35,7 +35,7 @@ console.log("...");
 
 ftpDeploy.on("uploading", function(data) {
   console.log(
-    `------ ${data.transferredFileCount} of ${data.transferredFileCount} files transferred -------`
+    `------ ${data.transferredFileCount} of ${data.totalFilesCount} files transferred -------`
   );
   console.log("Current file: ", data.filename);
 });
