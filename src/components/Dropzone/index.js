@@ -5,8 +5,13 @@ import {
   Label,
   FileLabel,
   FileUpload,
-  FileUploadLabel
+  FileUploadLabel,
+  BankContainer,
+  BankImage
 } from "./styles";
+
+import Fnb from "../../assets/banks/fnb.png";
+import Nedbank from "../../assets/banks/nedbank.png";
 
 export default class Dropzone extends Component {
   constructor(props) {
@@ -86,23 +91,29 @@ export default class Dropzone extends Component {
   render() {
     const { dragOver, droppedFiles } = this.state;
     return (
-      <Container ref={this.dropRef} droppable={dragOver}>
-        <FileUploadLabel>
-          <FileUpload
-            type={"file"}
-            multiple
-            onChange={this.handleManualUpload}
-          />
-        </FileUploadLabel>
+      <>
+        <BankContainer>
+          <BankImage src={Fnb} />
+          <BankImage src={Nedbank} />
+        </BankContainer>
+        <Container ref={this.dropRef} droppable={dragOver}>
+          <FileUploadLabel>
+            <FileUpload
+              type={"file"}
+              multiple
+              onChange={this.handleManualUpload}
+            />
+          </FileUploadLabel>
 
-        {droppedFiles.length === 0 ? (
-          <Label>Drop files here</Label>
-        ) : (
-          droppedFiles.map((file, index) => {
-            return <FileLabel key={index}>{file.name}</FileLabel>;
-          })
-        )}
-      </Container>
+          {droppedFiles.length === 0 ? (
+            <Label>Drop files here</Label>
+          ) : (
+            droppedFiles.map((file, index) => {
+              return <FileLabel key={index}>{file.name}</FileLabel>;
+            })
+          )}
+        </Container>
+      </>
     );
   }
 }
