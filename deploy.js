@@ -1,14 +1,9 @@
 var FtpDeploy = require("ftp-deploy");
 var ftpDeploy = new FtpDeploy();
 
-// const USERNAME = "rasbrujn";
-// const PASSWORD = "lm!x]ljJ5W-i";
-// const ADDRESS = "154.0.172.157";
-// const PORT = 21;
-
-const USERNAME = "";
-const PASSWORD = "";
-const ADDRESS = "";
+const USERNAME = "audinrma";
+const PASSWORD = "z6!nNShL9j9u";
+const ADDRESS = "154.0.174.142";
 const PORT = 21;
 
 var config = {

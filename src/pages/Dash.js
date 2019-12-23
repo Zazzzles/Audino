@@ -10,6 +10,7 @@ import TransactionList from "../components/TransactionList";
 import Navbar from "../components/Navbar";
 //Sections
 import MonthlySection from "../components/MonthlySection";
+import AllSection from "../components/AllSection";
 //Utils
 import { parseFiles } from "../utils/parser";
 import { getFiles } from "../utils/persistence";
@@ -19,7 +20,8 @@ class Dash extends Component {
     super(props);
     this.state = {
       files: [],
-      workingFile: {}
+      workingFile: {},
+      selectedNav: "monthly"
     };
   }
 
@@ -46,8 +48,8 @@ class Dash extends Component {
     });
   };
 
-  onNavItemClicked = item => {
-    console.log(`${item} clicked`);
+  onNavItemClicked = selectedNav => {
+    this.setState({ selectedNav });
   };
 
   onFileSelected = file => {
@@ -57,7 +59,7 @@ class Dash extends Component {
   };
 
   render() {
-    const { files, workingFile } = this.state;
+    const { files, workingFile, selectedNav } = this.state;
     return (
       <MainWrapper>
         <Topbar onBack={this.onBack} />
@@ -73,7 +75,12 @@ class Dash extends Component {
             <TransactionList transactions={workingFile.transactions} />
             <NavPanel>
               <Navbar onClick={this.onNavItemClicked} />
-              <MonthlySection transactions={workingFile.transactions} />
+              {selectedNav === "monthly" && (
+                <MonthlySection transactions={workingFile.transactions} />
+              )}
+              {selectedNav === "all" && (
+                <AllSection transactions={workingFile.transactions} />
+              )}
             </NavPanel>
           </ContentContainer>
         )}
