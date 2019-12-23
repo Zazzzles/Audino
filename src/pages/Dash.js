@@ -11,6 +11,7 @@ import Navbar from "../components/Navbar";
 //Sections
 import MonthlySection from "../components/MonthlySection";
 import AllSection from "../components/AllSection";
+import CategorySection from "../components/CategorySection";
 //Utils
 import { parseFiles } from "../utils/parser";
 import { getFiles } from "../utils/persistence";
@@ -36,10 +37,6 @@ class Dash extends Component {
     }
     this.setState({ files: data, workingFile: data[0] });
   };
-
-  // parseData = data => {
-  //   console.log(parseResults(data));
-  // };
 
   onBack = () => {
     const { history } = this.props;
@@ -80,6 +77,9 @@ class Dash extends Component {
               )}
               {selectedNav === "all" && (
                 <AllSection transactions={workingFile.transactions} />
+              )}
+              {selectedNav === "categories" && (
+                <CategorySection transactions={workingFile.transactions} />
               )}
             </NavPanel>
           </ContentContainer>

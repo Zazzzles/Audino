@@ -1,12 +1,20 @@
+const stringSimilarity = require("string-similarity");
+
 interface DataPoint {
   date: string;
   amount: number;
-  ref: String;
+  ref: string;
 }
 
 interface TotalPoint {
   date: String;
   transactions: Number;
+  amount: Number;
+}
+
+interface ReferencePoint {
+  name: String;
+  count: Number;
   amount: Number;
 }
 
@@ -88,6 +96,14 @@ export function isolateAmount(data: Array<DataPoint>): Array<Number> {
   return data.map(item => item.amount);
 }
 
+export function isolateReference(data: Array<ReferencePoint>): Array<String> {
+  return data.map(item => item.name);
+}
+
+export function isolateCount(data: Array<ReferencePoint>): Array<Number> {
+  return data.map(item => item.count);
+}
+
 //  Get array of transaction amounts from array of totalPoints
 export function isolateTransactionCounts(
   data: Array<TotalPoint>
@@ -107,7 +123,9 @@ export function getMonths(data: Array<DataPoint>): Array<Number> {
 
 //  FIXME: Possibly rather go for using month names as object keys
 //  Return sorted datapoints by month
-export function sortByMonth(data: Array<DataPoint>): Array<Array<DataPoint>> {
+export function sortByMonth(
+  data: Array<DataPoint>
+): { month: Array<DataPoint> } {
   let sorted: any = {};
   data.forEach(item => {
     let month = getMonthNumber(item.date);
@@ -126,4 +144,90 @@ export function mapToColor(
   data: Array<DataPoint>
 ): Array<String> {
   return data.map(_ => color);
+}
+
+//  Determines reference counts by comparing similarity of reference names
+export function getReferences(data: Array<DataPoint>): Array<ReferencePoint> {
+  let references: any = {};
+  data.forEach(item => {
+    const { ref, amount } = item;
+    if (Object.keys(references).length === 0) {
+      references[ref] = {
+        amount,
+        count: 1
+      };
+    } else {
+      Object.keys(references).forEach(key => {
+        if (stringSimilarity.compareTwoStrings(key, ref) > 0.6) {
+          if (references[ref]) {
+            references[ref] = {
+              amount: references[ref].amount + amount,
+              count: references[ref].count + 1
+            };
+          } else {
+            references[ref] = {
+              amount,
+              count: 1
+            };
+          }
+        } else {
+          references[ref] = {
+            amount,
+            count: 1
+          };
+        }
+      });
+    }
+  });
+
+  let formatted = Object.keys(references).map(key => {
+    return {
+      name: key,
+      amount: references[key].amount,
+      count: references[key].count
+    };
+  });
+  return formatted;
+}
+
+export function getReferencesByMonth(
+  data: Array<DataPoint>
+): { month: Array<ReferencePoint> } {
+  let sorted: any = sortByMonth(data);
+  Object.keys(sorted).forEach(key => {
+    sorted[key] = getReferences(sorted[key]);
+  });
+  return sorted;
+}
+
+export function getRecurringReferenes(data: Array<DataPoint>): Array<String> {
+  let sorted: any = getReferencesByMonth(data);
+
+  let filtered: any = {};
+  //Remove items which occur more than once per month
+  Object.keys(sorted).forEach(key => {
+    filtered[key] = sorted[key].filter((item: ReferencePoint) => {
+      return item.count === 1;
+    });
+  });
+  // Count how many times items occur accross all months
+  let counts: any = {};
+  Object.keys(filtered).forEach(key => {
+    filtered[key].forEach((item: any) => {
+      const { name } = item;
+      if (counts[name]) {
+        counts[name] = counts[name] + 1;
+      } else {
+        counts[name] = 1;
+      }
+    });
+  });
+  //Remove items that occur only once across all months
+  let finals: any = [];
+  Object.keys(counts).forEach(key => {
+    if (counts[key] !== 1) {
+      finals.push(key);
+    }
+  });
+  return finals;
 }

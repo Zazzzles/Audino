@@ -23,22 +23,7 @@ import {
   mapToColor
 } from "../../utils/methods";
 
-import { monthColors } from "../../utils/consts";
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
+import { months } from "../../utils/consts";
 
 export default class MonthlySection extends Component {
   constructor(props) {
@@ -66,9 +51,9 @@ export default class MonthlySection extends Component {
 
   update = () => {
     const { transactions } = this.props;
-    const months = getMonths(transactions);
+    const transactionMonths = getMonths(transactions);
     const sortedByMonthData = sortByMonth(transactions);
-    let availableMonths = months.map(month => MONTHS[month - 1]);
+    let availableMonths = transactionMonths.map(month => months[month - 1]);
     if (this.chartContainerRef) {
       this.setState(
         {
@@ -96,7 +81,7 @@ export default class MonthlySection extends Component {
 
   updateCharts = () => {
     const { selectedMonth, sortedByMonthData } = this.state;
-    const monthIndex = MONTHS.indexOf(selectedMonth);
+    const monthIndex = months.indexOf(selectedMonth);
     const rawData = addAmounts(sortedByMonthData[monthIndex + 1]);
     const data = isolateAmount(rawData);
     const transactions = isolateTransactionCounts(rawData);

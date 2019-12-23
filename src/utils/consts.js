@@ -52,3 +52,18 @@ export const monthColors = [
     borderColor: "rgba(61, 68, 255, 1)"
   }
 ];
+
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
