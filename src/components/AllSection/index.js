@@ -11,9 +11,17 @@ import ChartTypeSwitch from "../ChartTypeSwitch";
 import Linechart from "../charts/Linechart";
 import Barchart from "../charts/Barchart";
 
-import { isolateDate, isolateAmount, addAmounts } from "../../utils/methods";
+import {
+  isolateDate,
+  isolateAmount,
+  addAmounts,
+  sortByMonth,
+  mapToColor
+} from "../../utils/methods";
 
-const CHART_HEIGHT = 600;
+import { monthColors } from "../../utils/consts";
+
+const CHART_HEIGHT = 650;
 export default class AllSection extends Component {
   constructor(props) {
     super(props);
@@ -44,25 +52,50 @@ export default class AllSection extends Component {
 
   updateCharts = () => {
     const { transactions } = this.state;
+
+    //  Sorting colors by month for bargraph only
+    const sortedByMonth = sortByMonth(transactions);
+    let backgroundColor = [];
+    let borderColor = [];
+
+    Object.keys(sortedByMonth).forEach(key => {
+      let transactions = sortedByMonth[key];
+      addAmounts(transactions).forEach(_ => {
+        backgroundColor.push(monthColors[key].backgroundColor);
+        borderColor.push(monthColors[key].borderColor);
+      });
+    });
+
     const formatted = addAmounts(transactions);
     const data = isolateAmount(formatted);
     const labels = isolateDate(formatted);
+
     this.lineChart &&
       this.lineChart.update &&
       this.lineChart.update({
-        data,
-        labels,
-        key: "Amount",
-        reverse: true,
+        datasets: [
+          {
+            label: "Amount",
+            data: data.reverse(),
+            backgroundColor: mapToColor("rgba(96, 159, 235, 0.5)", data),
+            borderColor: mapToColor("rgba(96, 159, 235, 1)", data)
+          }
+        ],
+        labels: labels.reverse(),
         yAxisToken: "R"
       });
     this.barChart &&
       this.barChart.update &&
       this.barChart.update({
-        data,
-        labels,
-        key: "Amount",
-        reverse: true,
+        datasets: [
+          {
+            label: "Amount",
+            data: data.reverse(),
+            backgroundColor,
+            borderColor
+          }
+        ],
+        labels: labels.reverse(),
         yAxisToken: "R"
       });
   };
@@ -92,8 +125,6 @@ export default class AllSection extends Component {
                   ref={elem => (this.lineChart = elem)}
                   id={"1"}
                   height={CHART_HEIGHT}
-                  lineColor={"rgba(96, 159, 235, 1)"}
-                  bgColor={"rgba(96, 159, 235, 0.5)"}
                   width={chartContainerWidth}
                 />
               )}
@@ -102,8 +133,6 @@ export default class AllSection extends Component {
                   ref={elem => (this.barChart = elem)}
                   id={"1"}
                   height={CHART_HEIGHT}
-                  lineColor={"rgba(96, 159, 235, 1)"}
-                  bgColor={"rgba(96, 159, 235, 0.5)"}
                   width={chartContainerWidth}
                 />
               )}

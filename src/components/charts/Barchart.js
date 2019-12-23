@@ -9,34 +9,26 @@ export default class BarChart extends Component {
   }
 
   update = config => {
-    const { data, labels, key, reverse = true, yAxisToken = "" } = config;
-
-    this.chart.data.labels = reverse ? labels.reverse() : labels;
-    this.chart.data.datasets[0].data = reverse ? data.reverse() : data;
-    this.chart.data.datasets[0].label = key;
-    this.chart.data.datasets[0].backgroundColor = this.getColors(
-      data
-    ).backgroundColors;
-    this.chart.data.datasets[0].borderColor = this.getColors(data).borderColors;
+    const { labels, datasets, yAxisToken = "" } = config;
+    let formattedDatasets = datasets.map(dataItem => {
+      const { label, data, backgroundColor, borderColor } = dataItem;
+      return {
+        label,
+        data,
+        backgroundColor,
+        borderColor
+      };
+    });
+    this.chart.data.labels = labels;
+    this.chart.data.datasets = formattedDatasets;
     this.chart.options.scales.yAxes[0].ticks.callback = function(value) {
       return yAxisToken + value;
     };
     this.chart.update();
   };
 
-  getColors = data => {
-    const { lineColor, bgColor } = this.props;
-    return data.reduce(
-      i => {
-        i.backgroundColors.push(bgColor);
-        i.borderColors.push(lineColor);
-        return i;
-      },
-      {
-        backgroundColors: [],
-        borderColors: []
-      }
-    );
+  generateColors = (color, data) => {
+    return data.map(_ => color);
   };
 
   componentDidMount = () => {

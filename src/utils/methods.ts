@@ -107,7 +107,7 @@ export function getMonths(data: Array<DataPoint>): Array<Number> {
 
 //  FIXME: Possibly rather go for using month names as object keys
 //  Return sorted datapoints by month
-export function sortByMonth(data: Array<any>): Array<Array<DataPoint>> {
+export function sortByMonth(data: Array<DataPoint>): Array<Array<DataPoint>> {
   let sorted: any = {};
   data.forEach(item => {
     let month = getMonthNumber(item.date);
@@ -118,4 +118,12 @@ export function sortByMonth(data: Array<any>): Array<Array<DataPoint>> {
     }
   });
   return sorted;
+}
+
+//  Map data to array of colors
+export function mapToColor(
+  color: String,
+  data: Array<DataPoint>
+): Array<String> {
+  return data.map(_ => color);
 }

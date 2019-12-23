@@ -19,8 +19,11 @@ import {
   isolateDate,
   addAmounts,
   isolateAmount,
-  isolateTransactionCounts
+  isolateTransactionCounts,
+  mapToColor
 } from "../../utils/methods";
+
+import { monthColors } from "../../utils/consts";
 
 const MONTHS = [
   "January",
@@ -101,29 +104,44 @@ export default class MonthlySection extends Component {
     this.lineChart &&
       this.lineChart.update &&
       this.lineChart.update({
-        data,
-        labels,
-        key: "Amount",
-        reverse: true,
+        datasets: [
+          {
+            label: "Amount",
+            data: data.reverse(),
+            backgroundColor: mapToColor("rgba(96, 159, 235, 0.5)", data),
+            borderColor: mapToColor("rgba(96, 159, 235, 1)", data)
+          }
+        ],
+        labels: labels.reverse(),
         yAxisToken: "R"
       });
     this.barChart &&
       this.barChart.update &&
       this.barChart.update({
-        data,
-        labels,
-        key: "Amount",
-        reverse: true,
+        datasets: [
+          {
+            label: "Amount",
+            data: data.reverse(),
+            backgroundColor: mapToColor("rgba(96, 159, 235, 0.5)", data),
+            borderColor: mapToColor("rgba(96, 159, 235, 1)", data)
+          }
+        ],
+        labels: labels.reverse(),
         yAxisToken: "R"
       });
 
     this.barChartTransactions &&
       this.barChartTransactions.update &&
       this.barChartTransactions.update({
-        data: transactions,
-        labels,
-        key: "Transaction counts",
-        reverse: false,
+        datasets: [
+          {
+            label: "Transaction counts",
+            data: transactions,
+            backgroundColor: mapToColor("rgba(255, 61, 135, 0.5)", data),
+            borderColor: mapToColor("rgba(255, 61, 135, 1)", data)
+          }
+        ],
+        labels: labels,
         yAxisToken: ""
       });
   };
@@ -156,8 +174,6 @@ export default class MonthlySection extends Component {
                   ref={elem => (this.lineChart = elem)}
                   id={"1"}
                   height={330}
-                  lineColor={"rgba(96, 159, 235, 1)"}
-                  bgColor={"rgba(96, 159, 235, 0.5)"}
                   width={chartContainerWidth}
                 />
               )}
@@ -166,8 +182,6 @@ export default class MonthlySection extends Component {
                   ref={elem => (this.barChart = elem)}
                   id={"1"}
                   height={330}
-                  lineColor={"rgba(96, 159, 235, 1)"}
-                  bgColor={"rgba(96, 159, 235, 0.5)"}
                   width={chartContainerWidth}
                 />
               )}
@@ -182,8 +196,6 @@ export default class MonthlySection extends Component {
                 ref={elem => (this.barChartTransactions = elem)}
                 id={"2"}
                 height={330}
-                lineColor={"rgba(255, 61, 135, 1)"}
-                bgColor={"rgba(255, 61, 135, 0.5)"}
                 width={chartContainerWidth}
               />
             </ChartWrapper>
