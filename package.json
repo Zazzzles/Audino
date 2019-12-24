@@ -20,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "node deploy"
+    "deploy": "yarn build && node deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
