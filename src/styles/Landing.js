@@ -148,3 +148,10 @@ export const ExampleText = styled.span`
   font-weight: 600;
   color: #39b1ee;
 `;
+
+export const VersionNumber = styled.span`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 15px;
+`;

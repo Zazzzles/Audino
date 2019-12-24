@@ -160,7 +160,12 @@ export function getReferences(data: Array<DataPoint>): Array<ReferencePoint> {
       };
     } else {
       Object.keys(references).forEach(key => {
-        if (stringSimilarity.compareTwoStrings(key, ref) > 0.6) {
+        if (
+          stringSimilarity.compareTwoStrings(
+            key.substring(0, 10),
+            ref.substring(0, 10)
+          ) > 0.6
+        ) {
           if (references[ref]) {
             references[ref] = {
               amount: references[ref].amount + amount,

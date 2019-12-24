@@ -20,7 +20,8 @@ import {
   LeftContainer,
   RightContainer,
   MobileWrapper,
-  ExampleText
+  ExampleText,
+  VersionNumber
 } from "../styles/Landing";
 
 import Fnb from "../assets/banks/fnb.png";
@@ -37,6 +38,7 @@ import BGmobile from "../assets/bg.png";
 import Logo from "../assets/logo_grad.png";
 import LogoWhite from "../assets/logo.png";
 
+const APP_VERSION = "1.0.1";
 class Landing extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +81,7 @@ class Landing extends Component {
     const { files, loadedFiles } = this.state;
     return (
       <MainWrapper image={BG}>
+        <VersionNumber>{APP_VERSION}</VersionNumber>
         <MobileWrapper image={BGmobile}>
           <LogoContainer>
             <LogoImage src={LogoWhite} />
