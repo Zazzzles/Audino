@@ -202,6 +202,7 @@ export function getReferencesByMonth(
   return sorted;
 }
 
+//  Add amounts if reference occurs more than once in same month
 export function getRecurringReferences(data: Array<DataPoint>): Array<Object> {
   let sorted: any = getReferencesByMonth(data);
   let filtered: any = {};

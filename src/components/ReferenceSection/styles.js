@@ -25,4 +25,6 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LeftContainer = styled.div``;
-export const RightContainer = styled.div``;
+export const RightContainer = styled.div`
+  width: 100%;
+`;

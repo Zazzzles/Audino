@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
   margin-left: 20px;
 `;
@@ -15,7 +17,7 @@ export const Header = styled.div`
 `;
 
 export const TransactionItem = styled.div`
-  width: 100%;
+  width: 49%;
   border: 1px solid lightgrey;
   padding-left: 15px;
   padding-right: 15px;
@@ -33,7 +35,7 @@ export const MonthContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  margin-top: 5px;
+  flex-wrap: wrap;
 `;
 
 export const MonthItem = styled.div`
@@ -43,6 +45,7 @@ export const MonthItem = styled.div`
   color: white;
   border-radius: 10px;
   padding-top: 3px;
+  margin-top: 5px;
   padding-bottom: 3px;
   padding-left: 10px;
   padding-right: 10px;
