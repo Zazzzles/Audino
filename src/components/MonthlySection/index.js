@@ -121,7 +121,7 @@ export default class MonthlySection extends Component {
         datasets: [
           {
             label: "Transaction counts",
-            data: transactions,
+            data: transactions.reverse(),
             backgroundColor: mapToColor("rgba(255, 61, 135, 0.5)", data),
             borderColor: mapToColor("rgba(255, 61, 135, 1)", data)
           }
