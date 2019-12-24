@@ -1,5 +1,7 @@
 const stringSimilarity = require("string-similarity");
 
+// FIXME: Make sure transaction counts are calculated correctly
+//  Check test data on october 23rd
 interface DataPoint {
   date: string;
   amount: number;
@@ -200,13 +202,12 @@ export function getReferencesByMonth(
   return sorted;
 }
 
-export function getRecurringReferenes(data: Array<DataPoint>): Array<String> {
+export function getRecurringReferences(data: Array<DataPoint>): Array<Object> {
   let sorted: any = getReferencesByMonth(data);
-
   let filtered: any = {};
   //Remove items which occur more than once per month
   Object.keys(sorted).forEach(key => {
-    filtered[key] = sorted[key].filter((item: ReferencePoint) => {
+    filtered[key] = sorted[key].filter((item: any) => {
       return item.count === 1;
     });
   });
@@ -229,5 +230,25 @@ export function getRecurringReferenes(data: Array<DataPoint>): Array<String> {
       finals.push(key);
     }
   });
-  return finals;
+
+  //  Change shape of recurring items
+  let formattedFinals = finals.map((item: any) => {
+    return {
+      name: item,
+      months: []
+    };
+  });
+
+  //  Add amounts per month to recurring items
+  Object.keys(sorted).forEach(key => {
+    sorted[key].forEach((refItem: any) => {
+      formattedFinals.forEach((item: any) => {
+        if (refItem.name === item.name) {
+          item.months.push({ month: key, amount: refItem.amount });
+        }
+      });
+    });
+  });
+
+  return formattedFinals;
 }

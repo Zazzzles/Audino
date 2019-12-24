@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 30px;
+  min-height: 30px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -12,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const NavItem = styled.div`
-  height: 50px;
+  height: 30px;
   padding-left: 20px;
   padding-right: 20px;
   box-sizing: border-box;

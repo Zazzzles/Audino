@@ -20,10 +20,10 @@ export default function Navbar({ onClick }) {
         ALL
       </NavItem>
       <NavItem
-        active={activeItem === "categories"}
-        onClick={() => handleClick("categories")}
+        active={activeItem === "references"}
+        onClick={() => handleClick("references")}
       >
-        CATEGORIES
+        REFERENCES
       </NavItem>
       <NavItem
         active={activeItem === "calendar"}

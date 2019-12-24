@@ -18,17 +18,11 @@ export const SelectionBar = styled.div`
   border-radius: 15px;
 `;
 
-export const ChartContainer = styled.div`
-  height: ${props => props.height}px;
-  width: 100%;
+export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  border: 1px solid lightgrey;
-  border-radius: 15px;
+  width: 100%;
 `;
 
-export const ChartWrapper = styled.div`
-  height: ${props => props.height}px;
-  width: ${props => props.width}px;
-`;
+export const LeftContainer = styled.div``;
+export const RightContainer = styled.div``;

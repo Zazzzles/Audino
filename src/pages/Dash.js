@@ -11,7 +11,7 @@ import Navbar from "../components/Navbar";
 //Sections
 import MonthlySection from "../components/MonthlySection";
 import AllSection from "../components/AllSection";
-import CategorySection from "../components/CategorySection";
+import ReferenceSection from "../components/ReferenceSection";
 //Utils
 import { parseFiles } from "../utils/parser";
 import { getFiles } from "../utils/persistence";
@@ -78,8 +78,8 @@ class Dash extends Component {
               {selectedNav === "all" && (
                 <AllSection transactions={workingFile.transactions} />
               )}
-              {selectedNav === "categories" && (
-                <CategorySection transactions={workingFile.transactions} />
+              {selectedNav === "references" && (
+                <ReferenceSection transactions={workingFile.transactions} />
               )}
             </NavPanel>
           </ContentContainer>
