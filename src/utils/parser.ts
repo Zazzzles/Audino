@@ -18,7 +18,6 @@ var UserData = new Stoor({ namespace: "audino-data" });
 export function parseFiles(files: Array<File>): Promise<Array<UserFile>> {
   return Promise.all(files.map(file => parse(file))).then(
     (res: Array<UserFile>) => {
-      // console.log(res);
       UserData.set("userdata", res);
       return res;
     }

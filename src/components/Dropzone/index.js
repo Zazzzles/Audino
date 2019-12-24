@@ -47,7 +47,6 @@ export default class Dropzone extends Component {
   handleDrag = e => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Drag");
   };
 
   handleDrop = e => {
