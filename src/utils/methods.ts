@@ -229,6 +229,23 @@ export function getRecurringReferences(data: Array<DataPoint>): Array<Object> {
       }
     });
   });
+
+  //  FIXME: Only check substring on transaction name to contribute to count even if
+  //  references end with random strings of numbers
+  ////////////////////
+  let newCounts: any = {};
+  Object.keys(filtered).forEach(key => {
+    filtered[key].forEach((item: any) => {
+      const { name } = item;
+      if (newCounts[name]) {
+        newCounts[name] = counts[name] + 1;
+      } else {
+        newCounts[name] = 1;
+      }
+    });
+  });
+  console.log(newCounts);
+  ///////////////////
   //Remove items that occur only once across all months
   let finals: any = [];
   Object.keys(counts).forEach(key => {
