@@ -4,12 +4,14 @@ import {
   Container,
   SelectionBar,
   ChartContainer,
-  ChartWrapper
+  ChartWrapper,
+  DataWrapper
 } from "./styles";
 
 import ChartTypeSwitch from "../ChartTypeSwitch";
 import Linechart from "../charts/Linechart";
 import Barchart from "../charts/Barchart";
+import TransactionList from "../TransactionList";
 
 import {
   isolateDate,
@@ -110,35 +112,38 @@ export default class AllSection extends Component {
     const { selectedChartType, chartContainerWidth, transactions } = this.state;
     return (
       <Container>
-        <SelectionBar>
-          <ChartTypeSwitch onSwitch={this.onChartTypeSelect} />
-        </SelectionBar>
+        <TransactionList transactions={transactions} />
+        <DataWrapper>
+          <SelectionBar>
+            <ChartTypeSwitch onSwitch={this.onChartTypeSelect} />
+          </SelectionBar>
 
-        <ChartContainer
-          height={CHART_HEIGHT}
-          ref={elem => (this.chartContainerRef = elem)}
-        >
-          {transactions.length !== 0 && (
-            <ChartWrapper height={CHART_HEIGHT} width={chartContainerWidth}>
-              {selectedChartType === "curve" && (
-                <Linechart
-                  ref={elem => (this.lineChart = elem)}
-                  id={"1"}
-                  height={CHART_HEIGHT}
-                  width={chartContainerWidth}
-                />
-              )}
-              {selectedChartType === "bar" && (
-                <Barchart
-                  ref={elem => (this.barChart = elem)}
-                  id={"1"}
-                  height={CHART_HEIGHT}
-                  width={chartContainerWidth}
-                />
-              )}
-            </ChartWrapper>
-          )}
-        </ChartContainer>
+          <ChartContainer
+            height={CHART_HEIGHT}
+            ref={elem => (this.chartContainerRef = elem)}
+          >
+            {transactions.length !== 0 && (
+              <ChartWrapper height={CHART_HEIGHT} width={chartContainerWidth}>
+                {selectedChartType === "curve" && (
+                  <Linechart
+                    ref={elem => (this.lineChart = elem)}
+                    id={"1"}
+                    height={CHART_HEIGHT}
+                    width={chartContainerWidth}
+                  />
+                )}
+                {selectedChartType === "bar" && (
+                  <Barchart
+                    ref={elem => (this.barChart = elem)}
+                    id={"1"}
+                    height={CHART_HEIGHT}
+                    width={chartContainerWidth}
+                  />
+                )}
+              </ChartWrapper>
+            )}
+          </ChartContainer>
+        </DataWrapper>
       </Container>
     );
   }

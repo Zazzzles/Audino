@@ -28,6 +28,7 @@ export default function Navbar({ onClick }) {
       <NavItem
         active={activeItem === "calendar"}
         onClick={() => handleClick("calendar")}
+        last
       >
         CALENDAR
       </NavItem>

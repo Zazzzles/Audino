@@ -57,7 +57,7 @@ export const LogoContainer = styled.div`
 `;
 
 export const LogoImage = styled.img`
-  height: 60px;
+  height: 100px;
 `;
 
 export const Tagline = styled.span`

@@ -1,7 +1,5 @@
 const stringSimilarity = require("string-similarity");
 
-// FIXME: Make sure transaction counts are calculated correctly
-//  Check test data on october 23rd
 interface DataPoint {
   date: string;
   amount: number;

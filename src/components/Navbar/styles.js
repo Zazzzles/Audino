@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   min-height: 30px;
-  width: 100%;
+  width: 424px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid lightgrey;
   border-radius: 15px;
+  border: 1px solid lightgrey;
   overflow: hidden;
 `;
 
@@ -19,7 +19,7 @@ export const NavItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid lightgrey;
+  border-right: ${props => !props.last && " 1px solid lightgrey"};
   font-size: 15px;
   cursor: pointer;
   transition: all 0.3s;

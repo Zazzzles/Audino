@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  height: 100%;
+  height: 97%;
   width: 450px;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,7 @@ export const Container = styled.div`
   padding-right: 15px;
   box-sizing: border-box;
   border-radius: 15px;
+  margin-top: 20px;
 `;
 
 export const TopBar = styled.div`

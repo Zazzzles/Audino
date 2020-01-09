@@ -15,7 +15,6 @@ export const ContentContainer = styled.div`
 
 export const NavPanel = styled.div`
   width: 100%;
-  padding-left: 30px;
   display: flex;
   flex-direction: column;
 `;

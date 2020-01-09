@@ -69,7 +69,7 @@ class Dash extends Component {
 
         {workingFile.transactions && (
           <ContentContainer>
-            <TransactionList transactions={workingFile.transactions} />
+            {/* <TransactionList transactions={workingFile.transactions} /> */}
             <NavPanel>
               <Navbar onClick={this.onNavItemClicked} />
               {selectedNav === "monthly" && (
