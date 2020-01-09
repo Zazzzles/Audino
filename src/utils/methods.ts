@@ -7,19 +7,50 @@ interface DataPoint {
 }
 
 interface TotalPoint {
-  date: String;
+  date: string;
   transactions: Number;
   amount: Number;
 }
 
 interface ReferencePoint {
-  name: String;
+  name: string;
   count: Number;
+  transactions: Array<DataPoint>;
   amount: Number;
+}
+
+interface RecurringPoint {
+  name: string;
+  total: Number;
+  transactions: Array<DataPoint>;
 }
 
 interface Buffer {
   [key: string]: [DataPoint];
+}
+
+function getCommonWords(str1: String, str2: String): Array<String> {
+  //  Split and remove words that container numbers
+  let split1 = str1.split(" ").filter((word: string) => !/\d/.test(word));
+  let split2 = str2.split(" ").filter((word: string) => !/\d/.test(word));
+  let commonWords: Array<String> = [];
+
+  if (split1.length > split2.length) {
+    split1.forEach((word: string) => {
+      if (split2.includes(word)) {
+        commonWords.push(word);
+      }
+    });
+  } else {
+    split2.forEach((word: string) => {
+      if (split1.includes(word)) {
+        commonWords.push(word);
+      }
+    });
+  }
+  //  Remove spaces
+  let sanitized = commonWords.filter(word => word !== "");
+  return sanitized;
 }
 
 export function addAmounts(data: [DataPoint]): Array<TotalPoint> {
@@ -148,50 +179,47 @@ export function mapToColor(
 
 //  Determines reference counts by comparing similarity of reference names
 export function getReferences(data: Array<DataPoint>): Array<ReferencePoint> {
-  let references: any = {};
-  data.forEach(item => {
-    const { ref, amount } = item;
-    if (Object.keys(references).length === 0) {
-      references[ref] = {
+  let references = data.reduce((acc: any, item) => {
+    const { ref, amount, date } = item;
+    let sanitized = getCommonWords(ref, ref).join(" ");
+    if (acc[sanitized]) {
+      acc[sanitized] = {
+        transactions: [
+          ...acc[sanitized].transactions,
+          {
+            ref,
+            date,
+            amount
+          }
+        ],
+        amount: acc[sanitized].amount + amount,
+        count: acc[sanitized].count + 1
+      };
+    } else {
+      acc[sanitized] = {
+        transactions: [
+          {
+            ref,
+            date,
+            amount
+          }
+        ],
         amount,
         count: 1
       };
-    } else {
-      Object.keys(references).forEach(key => {
-        if (
-          stringSimilarity.compareTwoStrings(
-            key.substring(0, 10),
-            ref.substring(0, 10)
-          ) > 0.6
-        ) {
-          if (references[ref]) {
-            references[ref] = {
-              amount: references[ref].amount + amount,
-              count: references[ref].count + 1
-            };
-          } else {
-            references[ref] = {
-              amount,
-              count: 1
-            };
-          }
-        } else {
-          references[ref] = {
-            amount,
-            count: 1
-          };
-        }
-      });
     }
-  });
+    return acc;
+  }, {});
 
   let formatted = Object.keys(references).map(key => {
     return {
       name: key,
+      transactions: references[key].transactions,
       amount: references[key].amount,
       count: references[key].count
     };
   });
+
   return formatted;
 }
 
@@ -206,70 +234,71 @@ export function getReferencesByMonth(
 }
 
 //  FIXME: Add amounts if reference occurs more than once in same month
-export function getRecurringReferences(data: Array<DataPoint>): Array<Object> {
+export function getRecurringReferences(
+  data: Array<DataPoint>
+): Array<RecurringPoint> {
   let sorted: any = getReferencesByMonth(data);
-  let filtered: any = {};
-  //Remove items which occur more than once per month
-  Object.keys(sorted).forEach(key => {
-    filtered[key] = sorted[key].filter((item: any) => {
-      return item.count === 1;
-    });
-  });
-  // Count how many times items occur accross all months
-  let counts: any = {};
-  Object.keys(filtered).forEach(key => {
-    filtered[key].forEach((item: any) => {
-      const { name } = item;
-      if (counts[name]) {
-        counts[name] = counts[name] + 1;
+  let reduced = Object.keys(sorted).reduce((result: any, key) => {
+    let month = key;
+    sorted[month].forEach((monthTransaction: ReferencePoint) => {
+      if (!result[month]) {
+        result[month] = [monthTransaction.name];
       } else {
-        counts[name] = 1;
+        if (!result[month].includes(monthTransaction.name)) {
+          result[month].push(monthTransaction.name);
+        }
       }
     });
-  });
-
-  //  FIXME: Only check substring on transaction name to contribute to count even if
-  //  references end with random strings of numbers
-  ////////////////////
-  let newCounts: any = {};
-  Object.keys(filtered).forEach(key => {
-    filtered[key].forEach((item: any) => {
-      const { name } = item;
-      if (newCounts[name]) {
-        newCounts[name] = counts[name] + 1;
+    return result;
+  }, {});
+  let intersected: any = Object.keys(reduced).reduce(
+    (result: Array<string>, key) => {
+      if (result.length === 0) {
+        return reduced[key];
       } else {
-        newCounts[name] = 1;
+        let intersection = [];
+        if (result.length > reduced[key].length) {
+          intersection = result.filter(value => reduced[key].includes(value));
+        } else {
+          intersection = reduced[key].filter((value: string) =>
+            result.includes(value)
+          );
+        }
+        return intersection;
+      }
+    },
+    []
+  );
+
+  let formatted: any = Object.keys(sorted).reduce((result: any, key) => {
+    sorted[key].forEach((monthTransaction: ReferencePoint) => {
+      if (intersected.includes(monthTransaction.name)) {
+        if (result[monthTransaction.name]) {
+          result[monthTransaction.name] = {
+            amount:
+              result[monthTransaction.name].amount + monthTransaction.amount,
+            transactions: [
+              ...result[monthTransaction.name].transactions,
+              ...monthTransaction.transactions
+            ]
+          };
+        } else {
+          result[monthTransaction.name] = {
+            amount: monthTransaction.amount,
+            transactions: monthTransaction.transactions
+          };
+        }
       }
     });
-  });
-  console.log(newCounts);
-  ///////////////////
-  //Remove items that occur only once across all months
-  let finals: any = [];
-  Object.keys(counts).forEach(key => {
-    if (counts[key] !== 1) {
-      finals.push(key);
-    }
-  });
-
-  //  Change shape of recurring items
-  let formattedFinals = finals.map((item: any) => {
+    return result;
+  }, {});
+  let finalFormat = Object.keys(formatted).map(key => {
     return {
-      name: item,
-      months: []
+      name: key,
+      total: formatted[key].amount,
+      transactions: formatted[key].transactions
     };
   });
 
-  //  Add amounts per month to recurring items
-  Object.keys(sorted).forEach(key => {
-    sorted[key].forEach((refItem: any) => {
-      formattedFinals.forEach((item: any) => {
-        if (refItem.name === item.name) {
-          item.months.push({ month: key, amount: refItem.amount });
-        }
-      });
-    });
-  });
-
-  return formattedFinals;
+  return finalFormat;
 }

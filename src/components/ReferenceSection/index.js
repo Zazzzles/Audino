@@ -66,13 +66,14 @@ export default class ReferenceSection extends Component {
   };
 
   updateCharts = () => {
+    // TODO: Refactor to work with new format of RecurringPoints
     const { transactions } = this.props;
     const { selectedMonth } = this.state;
     const monthIndex = months.indexOf(selectedMonth) + 1;
     let formatted = getReferencesByMonth(transactions);
     this.setState({
-      referencesForMonth: formatted[monthIndex],
-      recurring: getRecurringReferences(transactions)
+      referencesForMonth: formatted[monthIndex]
+      //  recurring: getRecurringReferences(transactions)
     });
   };
 
@@ -104,7 +105,7 @@ export default class ReferenceSection extends Component {
             )}
           </LeftContainer>
           <RightContainer>
-            <RecurringTransactions recurring={recurring} />
+            {/* <RecurringTransactions recurring={recurring} /> */}
           </RightContainer>
         </ContentWrapper>
       </Container>
