@@ -7,7 +7,7 @@
     "@types/node": "^12.12.14",
     "chart.js": "^2.9.1",
     "ftp-deploy": "^2.3.6",
-    "papaparse": "^5.1.0",
+    "papaparse": "^5.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
